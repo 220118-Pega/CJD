@@ -19,6 +19,8 @@ public void start() {
 		System.out.println("Welcome to expense reports");
 		System.out.println("[1] Create a reinburstment request");
 		System.out.println("[2] List all requests");
+		System.out.println("[3] Approve request");
+		System.out.println("[4] Deny request");
 		System.out.println("[x] Exit");
 		
 		String userInput = myScanner.nextLine();
@@ -31,6 +33,12 @@ public void start() {
 			System.out.println("Showing all current requests");
 			getAlltransaction();
 			break;
+		case "3":
+			Approvetransaction();
+			break;
+		case "4":
+			Denytransaction();
+			break;
 		case "x":
 			System.out.println("Dismissed");
 			keepGoing = false;
@@ -41,6 +49,35 @@ public void start() {
 		}
 		
 	}while(keepGoing);
+}
+
+private void Approvetransaction() {
+	// if given incorect id num then a dummy is changed need to give warning
+	System.out.println("Enter the id of the transaction: ");
+	String tranid = myScanner.nextLine();
+	transaction updatetran = ReportBL.gettransactionById(Integer.parseInt(tranid));
+	if(updatetran.getTransactionamount() == 0) {
+		System.out.println("No Record of Transaction with that id check id used.");
+	}else {
+		updatetran.Approve();
+		
+		System.out.println("Approved");
+	}
+	
+}
+private void Denytransaction() {
+	// if given incorect id num then a dummy is changed need to give warning
+	System.out.println("Enter the id of the transaction: ");
+	String tranid = myScanner.nextLine();
+	transaction updatetran = ReportBL.gettransactionById(Integer.parseInt(tranid));
+	if(updatetran.getTransactionamount() == 0) {
+		System.out.println("No Record of Transaction with that id check id used.");
+	}else {
+		updatetran.Deny();
+		
+		System.out.println("Denied");
+	}
+	
 }
 
 private void getAlltransaction() {

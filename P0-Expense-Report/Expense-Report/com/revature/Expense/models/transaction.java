@@ -9,6 +9,12 @@ public class transaction {
 	private String transactiontype;
 	private String status;
 	//setters and getters
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public int getTransactionid() {
 		return transactionid;
 	}
@@ -50,6 +56,13 @@ public class transaction {
 		this.status = "pending";
 	}
 //userid,amount,date,type,id,status
+	public void Approve() {
+		this.setStatus("Approved");
+	}
+	public void Deny() {
+		this.setStatus("Deny");
+	}
+	
 	@Override
 	public String toString() {
 		return "Report[employee id="+ userid + ", amount=" + transactionamount + ", date=" + date + ", type= " + transactiontype +", transaction id=" + transactionid + ", status=" + status + "  ]";
