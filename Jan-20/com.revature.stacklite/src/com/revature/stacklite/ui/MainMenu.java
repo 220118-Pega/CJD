@@ -30,8 +30,7 @@ public class MainMenu {
 			switch (userInput) {
 			case "0":
 				System.out.println("Creating an issue");
-				Issue newIssue = new Issue();
-				System.out.println(newIssue);
+				createIssue();
 				break;
 			case "x":
 				System.out.println("Goodbye");
@@ -39,8 +38,21 @@ public class MainMenu {
 				break;
 			default:
 				System.out.println("Sorry wrong input, please try again");
+				break;
 			}
 		}while(keepGoing);
+		
+	}
+
+	private void createIssue() {
+		
+		System.out.println("Enter a title for your issue: ");
+		String title = myScanner.nextLine();
+		System.out.println("Enter a description for your issue: ");
+		String description = myScanner.nextLine();
+		Issue newIssue = new Issue(title,description);
+		//saving to storage
+		System.out.println(newIssue);
 		
 	}
 }
