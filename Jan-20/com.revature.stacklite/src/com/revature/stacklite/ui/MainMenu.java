@@ -2,6 +2,7 @@ package com.revature.stacklite.ui;
 
 import java.util.Scanner;
 
+import com.revature.stacklite.bl.IIssueBL;
 import com.revature.stacklite.models.Issue;
 
 /**
@@ -13,9 +14,11 @@ public class MainMenu {
 	//the scanner is very important to a UI
 	//declare it as a dependency 
 	private Scanner myScanner;
+	private IIssueBL issueBL;
 	//inject this dep via constructor
-	public MainMenu(Scanner myScanner) {
+	public MainMenu(Scanner myScanner,IIssueBL issueBL) {
 		this.myScanner = myScanner;
+		this.issueBL = issueBL;
 	}
 	
 	public void start() {
@@ -24,6 +27,7 @@ public class MainMenu {
 		do {
 			System.out.println("Welcome to Stacklite, what do you want to do");
 			System.out.println("[0] Create an issue");
+			System.out.println("[1] Get all Issues");
 			System.out.println("[x] Exit");
 			
 			String userInput = myScanner.nextLine();
@@ -31,6 +35,10 @@ public class MainMenu {
 			case "0":
 				System.out.println("Creating an issue");
 				createIssue();
+				break;
+			case "1":
+				System.out.println("Getting issues..");
+				getIssues();
 				break;
 			case "x":
 				System.out.println("Goodbye");
@@ -43,6 +51,11 @@ public class MainMenu {
 		}while(keepGoing);
 		
 	}
+	private void getIssues() {
+		for(Issue issue:issueBL.getIssues()) {
+			System.out.println(issue);
+		}
+	}
 
 	private void createIssue() {
 		
@@ -52,6 +65,7 @@ public class MainMenu {
 		String description = myScanner.nextLine();
 		Issue newIssue = new Issue(title,description);
 		//saving to storage
+		issueBL.addIssue(newIssue);
 		System.out.println(newIssue);
 		
 	}

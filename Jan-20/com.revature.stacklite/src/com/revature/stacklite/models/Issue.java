@@ -1,5 +1,7 @@
 package com.revature.stacklite.models;
 
+import java.util.List;
+
 /**
  * this is a model for coding issues
  * @author 16del
@@ -15,8 +17,15 @@ public class Issue {
 	private String title;
 	private String description;
 	private int id;
+	private List<Solution> solution;
 	
-// constuctos
+public List<Solution> getSolution() {
+		return solution;
+	}
+	public void setSolution(List<Solution> solution) {
+		this.solution = solution;
+	}
+	// constuctos
 	//methods used to initalize properites of a class
 	// default constructor exist
 	//super calls the constructor of the base class is implicitly used in this case
@@ -35,6 +44,10 @@ public class Issue {
 	//multiple constrotrs are polymorphism called method overloading
 	
 //methods
+	public Issue(String title, String description, int id, List<Solution> solutions) {
+		this(title, description, id);
+		this.solution = solutions;
+	}
 	//getters and setters
 	public String getTitle() {
 		return title;
@@ -49,7 +62,14 @@ public class Issue {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public int getId() {
 		return id;
+	}
+	@Override
+	public String toString() {
+		return "Issue[title="+ title + ", description=" + description + ", id=" + id + "]";
 	}
 }
