@@ -65,6 +65,7 @@ private void Approvetransaction() {
 	}
 	
 }
+
 private void Denytransaction() {
 	// if given incorect id num then a dummy is changed need to give warning
 	System.out.println("Enter the id of the transaction: ");

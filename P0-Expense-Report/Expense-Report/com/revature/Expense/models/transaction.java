@@ -56,6 +56,7 @@ public class transaction {
 		this.status = "pending";
 	}
 //userid,amount,date,type,id,status
+	//methods
 	public void Approve() {
 		this.setStatus("Approved");
 	}
