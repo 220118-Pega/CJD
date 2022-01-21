@@ -4,7 +4,7 @@ public class transaction {
 	//attributes 
 	private int transactionid;
 	private int userid;
-	private float transactionamount;
+	private double transactionamount;
 	private String date;
 	private enum transactiontype{ Lodging, Travel, Food, Other,Error}
 	private transactiontype type;
@@ -24,10 +24,10 @@ public class transaction {
 	public void setUserid(int userid) {
 		this.userid = userid;
 	}
-	public float getTransactionamount() {
+	public double getTransactionamount() {
 		return transactionamount;
 	}
-	public void setTransactionamount(float transactionamount) {
+	public void setTransactionamount(double transactionamount) {
 		this.transactionamount = transactionamount;
 	}
 	public String getDate() {
@@ -50,7 +50,7 @@ public class transaction {
 		this.type = com.revature.Expense.models.transaction.transactiontype.Other;
 	}
 	//constructors
-	public transaction(int userid, float transactionamount, String date) {
+	public transaction(int userid, double transactionamount, String date) {
 		super();
 		this.userid = userid;
 		this.transactionamount = transactionamount;

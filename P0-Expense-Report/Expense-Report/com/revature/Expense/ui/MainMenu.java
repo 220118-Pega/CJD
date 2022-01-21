@@ -53,30 +53,50 @@ public void start() {
 
 private void Approvetransaction() {
 	// if given incorect id num then a dummy is changed need to give warning
+	int tranid = 0;
+	boolean keepGoing = true;
 	System.out.println("Enter the id of the transaction: ");
-	String tranid = myScanner.nextLine();
-	transaction updatetran = ReportBL.gettransactionById(Integer.parseInt(tranid));
+	do {
+		if (myScanner.hasNextInt()){
+			tranid = myScanner.nextInt();
+			keepGoing = false;
+		}else {
+			System.out.println("invaild transaction id please enter transaction id: ");
+			myScanner.nextLine();
+	}}while(keepGoing);	
+	transaction updatetran = ReportBL.gettransactionById(tranid);
 	if(updatetran.getTransactionid() == 0) {
 		System.out.println("No Record of Transaction with that id check id used.");
 	}else {
 		updatetran.Approve();
 		
 		System.out.println("Approved");
+		System.out.println("");
 	}
 	
 }
 
 private void Denytransaction() {
 	// if given incorect id num then a dummy is changed need to give warning
+	int tranid = 0;
+	boolean keepGoing = true;
 	System.out.println("Enter the id of the transaction: ");
-	String tranid = myScanner.nextLine();
-	transaction updatetran = ReportBL.gettransactionById(Integer.parseInt(tranid));
+	do {
+		if (myScanner.hasNextInt()){
+			tranid = myScanner.nextInt();
+			keepGoing = false;
+		}else {
+			System.out.println("invaild transaction id please enter transaction id: ");
+			myScanner.nextLine();
+	}}while(keepGoing);	
+	transaction updatetran = ReportBL.gettransactionById(tranid);
 	if(updatetran.getTransactionid() == 0) {
 		System.out.println("No Record of Transaction with that id check id used.");
 	}else {
 		updatetran.Deny();
 		
 		System.out.println("Denied");
+		System.out.println("");
 	}
 	
 }
@@ -91,38 +111,40 @@ private void getAlltransaction() {
 private void createtransaction() {
 	boolean keepGoing = true;
 	//all the variables
-	String userid = "";
-	String transactionamount = "";
+	int userid = 0;
+	double transactionamount = 1.0;
 	// TODO Auto-generated method stub
 	//getting all variable info from employee
 	//a do while loop to get an accurate emp id
 	System.out.println("Please enter you employee id: ");
 	do {
 		if (myScanner.hasNextInt()){
-			userid = myScanner.nextLine();
+			userid = myScanner.nextInt();
 			keepGoing = false;
 		}else {
 			System.out.println("invaild employee id please enter employee id: ");
 			myScanner.nextLine();
 	}}while(keepGoing);	
 	keepGoing = true;
+	myScanner.nextLine();
 	
 	//do while loop to get a accurate tran amout
 	System.out.println("Please enter transaction amount: ");
 	do{
-		if(myScanner.hasNextFloat()){;
-			transactionamount = myScanner.nextLine();
+		if(myScanner.hasNextDouble()){;
+			transactionamount = myScanner.nextDouble();
 			keepGoing = false;
 		}else {
 			System.out.println("invaild number please enter exact amount: ");
 			myScanner.nextLine();
 	}}while(keepGoing);
 	keepGoing = true;
+	myScanner.nextLine();
 		
 	System.out.println("Please enter date of transaction: ");
 	String date = myScanner.nextLine();
 	//inserting into transaction
-	transaction newReport = new transaction(Integer.parseInt(userid),Float.parseFloat(transactionamount),date);
+	transaction newReport = new transaction(userid,transactionamount,date);
 	
 	
 	while(keepGoing) {
