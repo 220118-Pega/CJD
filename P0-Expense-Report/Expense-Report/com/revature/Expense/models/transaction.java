@@ -70,6 +70,6 @@ public class transaction {
 	
 	@Override
 	public String toString() {
-		return "Report[employee id="+ userid + ", amount=" + transactionamount + ", date=" + date + ", type= " + type.toString() +", transaction id=" + transactionid + ", status=" + state.toString() + "  ]";
+		return "Report[employee id="+ userid + ", amount=" + transactionamount + ", date=" + date + ", type=" + type.toString() +", transaction id=" + transactionid + ", status=" + state.toString() + "  ]";
 	}
 }

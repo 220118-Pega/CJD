@@ -30,7 +30,7 @@ public List<transaction> gettransaction() {
 public transaction gettransactionbyId(int id) {
 	// TODO Auto-generated method stub
 	//userid,amount,date,type,id,status
-	transaction foundtran = new transaction(0,0,"zero","zero");
+	transaction foundtran = new transaction(0,0,"zero");
 	for(transaction transaction:reportoftran) {
 		if(transaction.getTransactionid() == id) {
 			foundtran = transaction;

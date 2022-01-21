@@ -89,35 +89,71 @@ private void getAlltransaction() {
 }
 
 private void createtransaction() {
+	boolean keepGoing = true;
+	//all the variables
+	String userid = "";
+	String transactionamount = "";
 	// TODO Auto-generated method stub
 	//getting all variable info from employee
+	//a do while loop to get an accurate emp id
 	System.out.println("Please enter you employee id: ");
-	String userid = myScanner.nextLine();
+	do {
+		if (myScanner.hasNextInt()){
+			userid = myScanner.nextLine();
+			keepGoing = false;
+		}else {
+			System.out.println("invaild employee id please enter employee id: ");
+			myScanner.nextLine();
+	}}while(keepGoing);	
+	keepGoing = true;
+	
+	//do while loop to get a accurate tran amout
 	System.out.println("Please enter transaction amount: ");
-	String transactionamount = myScanner.nextLine();
+	do{
+		if(myScanner.hasNextFloat()){;
+			transactionamount = myScanner.nextLine();
+			keepGoing = false;
+		}else {
+			System.out.println("invaild number please enter exact amount: ");
+			myScanner.nextLine();
+	}}while(keepGoing);
+	keepGoing = true;
+		
 	System.out.println("Please enter date of transaction: ");
 	String date = myScanner.nextLine();
 	//inserting into transaction
 	transaction newReport = new transaction(Integer.parseInt(userid),Float.parseFloat(transactionamount),date);
 	
+	
+	while(keepGoing) {
 	System.out.println("please enter type of transaction: ");
 	System.out.println("[1] Lodging");
 	System.out.println("[2] Travel");
 	System.out.println("[3] Food");
 	System.out.println("[4] Other");
 	String transactiontype = myScanner.nextLine();
-	
 	//type
 	switch(transactiontype) {
 	case "1":
 		newReport.Lodging();
+		keepGoing = false;
+		break;
 	case "2":
 		newReport.Travel();
+		keepGoing = false;
+		break;
 	case "3":
 		newReport.Food();
+		keepGoing = false;
+		break;
 	case "4":
 		newReport.Other();
-	}
+		keepGoing = false;
+		break;
+	default:
+		System.out.println("Please only put listed options");
+		break;
+	}}
 	
 	//saving
 	ReportBL.addtransaction(newReport);
