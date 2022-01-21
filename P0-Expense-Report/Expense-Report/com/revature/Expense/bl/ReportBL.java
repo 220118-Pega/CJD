@@ -5,6 +5,11 @@ import java.util.List;
 import com.revature.Expense.dl.IRepo;
 import com.revature.Expense.models.transaction;
 
+/**
+ * is the midway point for menu and repo to serve as busiuss logic point
+ * @author 16del
+ *
+ */
 public class ReportBL implements RReportBL{
 	private IRepo repo;
 	

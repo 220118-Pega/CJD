@@ -102,7 +102,6 @@ private void Denytransaction() {
 }
 
 private void getAlltransaction() {
-	// TODO Auto-generated method stub
 	for(transaction transaction:ReportBL.gettransaction()) {
 		System.out.println(transaction);
 	}
@@ -113,7 +112,6 @@ private void createtransaction() {
 	//all the variables
 	int userid = 0;
 	double transactionamount = 1.0;
-	// TODO Auto-generated method stub
 	//getting all variable info from employee
 	//a do while loop to get an accurate emp id
 	System.out.println("Please enter you employee id: ");
@@ -143,8 +141,10 @@ private void createtransaction() {
 		
 	System.out.println("Please enter date of transaction: ");
 	String date = myScanner.nextLine();
+	System.out.println("Please enter a descrption of the transaction: ");
+	String descrption = myScanner.nextLine();
 	//inserting into transaction
-	transaction newReport = new transaction(userid,transactionamount,date);
+	transaction newReport = new transaction(userid,transactionamount,date,descrption);
 	
 	
 	while(keepGoing) {
