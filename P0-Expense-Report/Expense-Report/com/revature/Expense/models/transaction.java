@@ -6,7 +6,8 @@ public class transaction {
 	private int userid;
 	private float transactionamount;
 	private String date;
-	private String transactiontype;
+	private enum transactiontype{ Lodging, Travel, Food, Other,Error}
+	private transactiontype type;
 	private enum status{ Pending, Approved, Denied}
 	private status state;
 	
@@ -35,19 +36,26 @@ public class transaction {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public String getTransactiontype() {
-		return transactiontype;
+	
+	public void Lodging() {
+		this.type = com.revature.Expense.models.transaction.transactiontype.Lodging;
 	}
-	public void setTransactiontype(String transactiontype) {
-		this.transactiontype = transactiontype;
-	} 
+	public void Travel() {
+		this.type = com.revature.Expense.models.transaction.transactiontype.Travel;
+	}
+	public void Food() {
+		this.type = com.revature.Expense.models.transaction.transactiontype.Food;
+	}
+	public void Other() {
+		this.type = com.revature.Expense.models.transaction.transactiontype.Other;
+	}
 	//constructors
-	public transaction(int userid, float transactionamount, String date, String transactiontype) {
+	public transaction(int userid, float transactionamount, String date) {
 		super();
 		this.userid = userid;
 		this.transactionamount = transactionamount;
 		this.date = date;
-		this.transactiontype = transactiontype;
+		this.type = com.revature.Expense.models.transaction.transactiontype.Error;
 		this.transactionid = 0;
 		this.state =  com.revature.Expense.models.transaction.status.Pending;
 	}
@@ -62,6 +70,6 @@ public class transaction {
 	
 	@Override
 	public String toString() {
-		return "Report[employee id="+ userid + ", amount=" + transactionamount + ", date=" + date + ", type= " + transactiontype +", transaction id=" + transactionid + ", status=" + state.toString() + "  ]";
+		return "Report[employee id="+ userid + ", amount=" + transactionamount + ", date=" + date + ", type= " + type.toString() +", transaction id=" + transactionid + ", status=" + state.toString() + "  ]";
 	}
 }

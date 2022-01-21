@@ -97,11 +97,28 @@ private void createtransaction() {
 	String transactionamount = myScanner.nextLine();
 	System.out.println("Please enter date of transaction: ");
 	String date = myScanner.nextLine();
+	//inserting into transaction
+	transaction newReport = new transaction(Integer.parseInt(userid),Float.parseFloat(transactionamount),date);
+	
 	System.out.println("please enter type of transaction: ");
+	System.out.println("[1] Lodging");
+	System.out.println("[2] Travel");
+	System.out.println("[3] Food");
+	System.out.println("[4] Other");
 	String transactiontype = myScanner.nextLine();
 	
-	//inserting into transaction
-	transaction newReport = new transaction(Integer.parseInt(userid),Float.parseFloat(transactionamount),date, transactiontype);
+	//type
+	switch(transactiontype) {
+	case "1":
+		newReport.Lodging();
+	case "2":
+		newReport.Travel();
+	case "3":
+		newReport.Food();
+	case "4":
+		newReport.Other();
+	}
+	
 	//saving
 	ReportBL.addtransaction(newReport);
 	System.out.println(newReport);
