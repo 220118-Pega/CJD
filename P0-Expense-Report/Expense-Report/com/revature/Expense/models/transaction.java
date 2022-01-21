@@ -7,14 +7,10 @@ public class transaction {
 	private float transactionamount;
 	private String date;
 	private String transactiontype;
-	private String status;
+	private enum status{ Pending, Approved, Denied}
+	private status state;
+	
 	//setters and getters
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
 	public int getTransactionid() {
 		return transactionid;
 	}
@@ -53,19 +49,19 @@ public class transaction {
 		this.date = date;
 		this.transactiontype = transactiontype;
 		this.transactionid = 0;
-		this.status = "pending";
+		this.state =  com.revature.Expense.models.transaction.status.Pending;
 	}
 //userid,amount,date,type,id,status
 	//methods
 	public void Approve() {
-		this.setStatus("Approved");
+		this.state = com.revature.Expense.models.transaction.status.Approved;
 	}
 	public void Deny() {
-		this.setStatus("Deny");
+		this.state = com.revature.Expense.models.transaction.status.Denied;
 	}
 	
 	@Override
 	public String toString() {
-		return "Report[employee id="+ userid + ", amount=" + transactionamount + ", date=" + date + ", type= " + transactiontype +", transaction id=" + transactionid + ", status=" + status + "  ]";
+		return "Report[employee id="+ userid + ", amount=" + transactionamount + ", date=" + date + ", type= " + transactiontype +", transaction id=" + transactionid + ", status=" + state.toString() + "  ]";
 	}
 }

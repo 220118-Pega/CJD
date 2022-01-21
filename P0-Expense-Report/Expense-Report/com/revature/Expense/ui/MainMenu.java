@@ -56,7 +56,7 @@ private void Approvetransaction() {
 	System.out.println("Enter the id of the transaction: ");
 	String tranid = myScanner.nextLine();
 	transaction updatetran = ReportBL.gettransactionById(Integer.parseInt(tranid));
-	if(updatetran.getTransactionamount() == 0) {
+	if(updatetran.getTransactionid() == 0) {
 		System.out.println("No Record of Transaction with that id check id used.");
 	}else {
 		updatetran.Approve();
@@ -71,7 +71,7 @@ private void Denytransaction() {
 	System.out.println("Enter the id of the transaction: ");
 	String tranid = myScanner.nextLine();
 	transaction updatetran = ReportBL.gettransactionById(Integer.parseInt(tranid));
-	if(updatetran.getTransactionamount() == 0) {
+	if(updatetran.getTransactionid() == 0) {
 		System.out.println("No Record of Transaction with that id check id used.");
 	}else {
 		updatetran.Deny();
