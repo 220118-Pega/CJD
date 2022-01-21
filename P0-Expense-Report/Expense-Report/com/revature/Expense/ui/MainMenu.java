@@ -45,38 +45,40 @@ public void start() {
 	}while(keepGoing);
 }
 
-private void Approvetransaction() {
-	// if given incorect id num then a dummy is changed need to give warning
+//the similar process of approve and deny
+private transaction Pendingtransaction() {
 	int tranid = 0;
 	System.out.println("Enter the id of the transaction: ");
 	tranid = userIntAnswer();
 	transaction updatetran = ReportBL.gettransactionByTranId(tranid);
+	return updatetran;
+}
+private boolean confirm(transaction updatetran) {
+	boolean real = false;
 	if(updatetran.getTransactionid() == 0) {
 		System.out.println("No Record of Transaction with that id check id used.");
+		myScanner.nextLine();
 	}else {
-		updatetran.Approve();
-		
-		System.out.println("Approved");
-		System.out.println("");
+		real = true;
 	}
-	
+	return real;
 }
+
+private void Approvetransaction() {
+	// if given incorect id num then a dummy is changed need to give warning
+	transaction updatetran = Pendingtransaction();
+	if(confirm(updatetran))
+		updatetran.Approve();
+		System.out.println("Approved");
+	}
 
 private void Denytransaction() {
 	// if given incorect id num then a dummy is changed need to give warning
-	int tranid = 0;
-	System.out.println("Enter the id of the transaction: ");
-	tranid = userIntAnswer();
-	transaction updatetran = ReportBL.gettransactionByTranId(tranid);
-	if(updatetran.getTransactionid() == 0) {
-		System.out.println("No Record of Transaction with that id check id used.");
-	}else {
+	transaction updatetran = Pendingtransaction();
+	if(confirm(updatetran)) {
 		updatetran.Deny();
-		
 		System.out.println("Denied");
-		System.out.println("");
-	}
-	
+	}	
 }
 
 private void getAlltransaction() {
@@ -254,7 +256,6 @@ private int userIntAnswer() {
 			}
 			else {
 				System.out.println("invaild id please enter vaild id: ");
-				myScanner.nextLine();
 	}}while(keepGoing);
 	return id;
 }
