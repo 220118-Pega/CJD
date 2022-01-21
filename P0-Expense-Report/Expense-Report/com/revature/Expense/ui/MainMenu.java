@@ -15,12 +15,7 @@ public class MainMenu {
 public void start() {
 	boolean keepGoing = true;
 	do {
-		System.out.println("Welcome to expense reports");
-		System.out.println("[1] Create a reinburstment request");
-		System.out.println("[2] Records of requests");
-		System.out.println("[3] Approve request");
-		System.out.println("[4] Deny request");
-		System.out.println("[x] Exit");
+		MainTextMenu();
 		
 		String userInput = myScanner.nextLine();
 		switch(userInput) {
@@ -53,16 +48,8 @@ public void start() {
 private void Approvetransaction() {
 	// if given incorect id num then a dummy is changed need to give warning
 	int tranid = 0;
-	boolean keepGoing = true;
 	System.out.println("Enter the id of the transaction: ");
-	do {
-		if (myScanner.hasNextInt()){
-			tranid = myScanner.nextInt();
-			keepGoing = false;
-		}else {
-			System.out.println("invaild transaction id please enter transaction id: ");
-			myScanner.nextLine();
-	}}while(keepGoing);	
+	tranid = userIntAnswer();
 	transaction updatetran = ReportBL.gettransactionByTranId(tranid);
 	if(updatetran.getTransactionid() == 0) {
 		System.out.println("No Record of Transaction with that id check id used.");
@@ -78,16 +65,8 @@ private void Approvetransaction() {
 private void Denytransaction() {
 	// if given incorect id num then a dummy is changed need to give warning
 	int tranid = 0;
-	boolean keepGoing = true;
 	System.out.println("Enter the id of the transaction: ");
-	do {
-		if (myScanner.hasNextInt()){
-			tranid = myScanner.nextInt();
-			keepGoing = false;
-		}else {
-			System.out.println("invaild transaction id please enter transaction id: ");
-			myScanner.nextLine();
-	}}while(keepGoing);	
+	tranid = userIntAnswer();
 	transaction updatetran = ReportBL.gettransactionByTranId(tranid);
 	if(updatetran.getTransactionid() == 0) {
 		System.out.println("No Record of Transaction with that id check id used.");
@@ -125,6 +104,7 @@ private void getAlltransaction() {
 					}}
 				keepGoing = false;
 			}else if(myScanner.nextLine() == "x") {
+				keepGoing = false;
 				break;
 			}else {
 				System.out.println("invaild employee id please enter employee id: ");
@@ -158,6 +138,7 @@ private void getAlltransaction() {
 					keepGoing = false;
 					break;}
 				else if(myScanner.nextLine() == "x") {
+					keepGoing = false;
 					break;
 				}else {
 					System.out.println("invaild employee id please enter employee id: ");
@@ -227,15 +208,7 @@ private void createtransaction() {
 	//getting all variable info from employee
 	//a do while loop to get an accurate emp id
 	System.out.println("Please enter you employee id: ");
-	do {
-		if (myScanner.hasNextInt()){
-			userid = myScanner.nextInt();
-			keepGoing = false;
-		}else {
-			System.out.println("invaild employee id please enter employee id: ");
-			myScanner.nextLine();
-	}}while(keepGoing);	
-	keepGoing = true;
+	userid = userIntAnswer();
 	myScanner.nextLine();
 	
 	//do while loop to get a accurate tran amout
@@ -260,11 +233,7 @@ private void createtransaction() {
 	
 	
 	while(keepGoing) {
-	System.out.println("please enter type of transaction: ");
-	System.out.println("[1] Lodging");
-	System.out.println("[2] Travel");
-	System.out.println("[3] Food");
-	System.out.println("[4] Other");
+	MainTypeMenu();
 	String transactiontype = myScanner.nextLine();
 	//type
 	switch(transactiontype) {
@@ -294,4 +263,35 @@ private void createtransaction() {
 	System.out.println(newReport);
 	
 }
+
+//common tasks method out for ease of code
+private int userIntAnswer() {
+	int id = 0;
+	boolean keepGoing = true;
+	do {
+			if (myScanner.hasNextInt()){
+					id = myScanner.nextInt();
+					keepGoing = false;
+			}else {
+				System.out.println("invaild id please enter vaild id: ");
+				myScanner.nextLine();
+	}}while(keepGoing);
+	return id;
 }
+//holding text blocks for ease of editing
+private void MainTextMenu() {
+	System.out.println("Welcome to expense reports");
+	System.out.println("[1] Create a reinburstment request");
+	System.out.println("[2] Records of requests");
+	System.out.println("[3] Approve request");
+	System.out.println("[4] Deny request");
+	System.out.println("[x] Exit");
+}
+private void MainTypeMenu() {
+	System.out.println("please enter type of transaction: ");
+	System.out.println("[1] Lodging");
+	System.out.println("[2] Travel");
+	System.out.println("[3] Food");
+	System.out.println("[4] Other");
+}}
+
