@@ -87,37 +87,22 @@ private void getAlltransaction() {
 	
 	//2 cases
 	do {
-	System.out.println("[1] i am employee");
-	System.out.println("[2] i am manager");
-	System.out.println("[x] Quit");
+	MainAllTransactionMenu();
 	String authority = myScanner.nextLine();
 	
 	switch(authority) {
 	case "1":
-		System.out.println("Please enter you employee id: ");
-		do {
-			if (myScanner.hasNextInt()){
-				userid = myScanner.nextInt();
-				for(transaction user:ReportBL.gettransaction()) {
-					if(user.getUserid() == userid) {
-						System.out.println(user);
-					}}
-				keepGoing = false;
-			}else if(myScanner.nextLine() == "x") {
-				keepGoing = false;
-				break;
-			}else {
-				System.out.println("invaild employee id please enter employee id: ");
-				myScanner.nextLine();
-		}}while(keepGoing);	
+		EmployeeIdRequest();
+		userid = userIntAnswer();
+		for(transaction user:ReportBL.gettransaction()) {
+			if(user.getUserid() == userid) {
+				System.out.println(user);
+			}}
+		keepGoing = false;
+		break;
 	case "2":
 		do {
-		System.out.println("[1] list all records");
-		System.out.println("[2] list 1 employee's records");
-		System.out.println("[3] list all approved records");
-		System.out.println("[4] list all denied records");
-		System.out.println("[5] list all pending records");
-		System.out.println("[x] Quit");
+		MainManagerMenu();
 		Mchoice = myScanner.nextLine();
 		switch(Mchoice) {
 		case "1":
@@ -127,23 +112,14 @@ private void getAlltransaction() {
 			keepGoing = false;
 			break;
 		case "2":
-			System.out.println("Please enter a employee id: ");
-			do {
-				if (myScanner.hasNextInt()){
-					userid = myScanner.nextInt();
-					for(transaction user:ReportBL.gettransaction()) {
-					if(user.getUserid() == userid) {
-						System.out.println(user);
+			EmployeeIdRequest();
+			userid = userIntAnswer();
+			for(transaction user:ReportBL.gettransaction()) {
+				if(user.getUserid() == userid) {
+					System.out.println(user);
 					}}
-					keepGoing = false;
-					break;}
-				else if(myScanner.nextLine() == "x") {
-					keepGoing = false;
-					break;
-				}else {
-					System.out.println("invaild employee id please enter employee id: ");
-					myScanner.nextLine();
-			}}while(keepGoing);
+			keepGoing = false;
+			break;
 		case "3":
 			//modify find id to find approved
 			transaction helper = new transaction(0,1.0,"zero","zero");
@@ -207,7 +183,7 @@ private void createtransaction() {
 	double transactionamount = 1.0;
 	//getting all variable info from employee
 	//a do while loop to get an accurate emp id
-	System.out.println("Please enter you employee id: ");
+	EmployeeIdRequest();
 	userid = userIntAnswer();
 	myScanner.nextLine();
 	
@@ -272,7 +248,11 @@ private int userIntAnswer() {
 			if (myScanner.hasNextInt()){
 					id = myScanner.nextInt();
 					keepGoing = false;
-			}else {
+			}else if(myScanner.nextLine() == "x") {
+				keepGoing = false;
+				break;
+			}
+			else {
 				System.out.println("invaild id please enter vaild id: ");
 				myScanner.nextLine();
 	}}while(keepGoing);
@@ -293,5 +273,29 @@ private void MainTypeMenu() {
 	System.out.println("[2] Travel");
 	System.out.println("[3] Food");
 	System.out.println("[4] Other");
-}}
+}
+private void MainManagerMenu() {
+	System.out.println("[1] list all records");
+	System.out.println("[2] list 1 employee's records");
+	System.out.println("[3] list all approved records");
+	System.out.println("[4] list all denied records");
+	System.out.println("[5] list all pending records");
+	System.out.println("[x] Quit");
+}
+private void EmployeeIdRequest() {
+	System.out.println("Please enter a employee id: ");
+}
+private void MainAllTransactionMenu() {
+	System.out.println("[1] i am employee");
+	System.out.println("[2] i am manager");
+	System.out.println("[x] Quit");
+}
+
+
+
+
+
+
+
+}
 
