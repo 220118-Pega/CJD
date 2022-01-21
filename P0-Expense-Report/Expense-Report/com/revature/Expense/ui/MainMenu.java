@@ -1,7 +1,6 @@
 package com.revature.Expense.ui;
 
 import java.util.Scanner;
-
 import com.revature.Expense.bl.ReportBL;
 import com.revature.Expense.models.transaction;
 
@@ -18,7 +17,7 @@ public void start() {
 	do {
 		System.out.println("Welcome to expense reports");
 		System.out.println("[1] Create a reinburstment request");
-		System.out.println("[2] List all requests");
+		System.out.println("[2] Records of requests");
 		System.out.println("[3] Approve request");
 		System.out.println("[4] Deny request");
 		System.out.println("[x] Exit");
@@ -30,7 +29,7 @@ public void start() {
 			createtransaction();
 			break;
 		case "2":
-			System.out.println("Showing all current requests");
+			System.out.println("Welcome to Records");
 			getAlltransaction();
 			break;
 		case "3":
@@ -64,7 +63,7 @@ private void Approvetransaction() {
 			System.out.println("invaild transaction id please enter transaction id: ");
 			myScanner.nextLine();
 	}}while(keepGoing);	
-	transaction updatetran = ReportBL.gettransactionById(tranid);
+	transaction updatetran = ReportBL.gettransactionByTranId(tranid);
 	if(updatetran.getTransactionid() == 0) {
 		System.out.println("No Record of Transaction with that id check id used.");
 	}else {
@@ -89,7 +88,7 @@ private void Denytransaction() {
 			System.out.println("invaild transaction id please enter transaction id: ");
 			myScanner.nextLine();
 	}}while(keepGoing);	
-	transaction updatetran = ReportBL.gettransactionById(tranid);
+	transaction updatetran = ReportBL.gettransactionByTranId(tranid);
 	if(updatetran.getTransactionid() == 0) {
 		System.out.println("No Record of Transaction with that id check id used.");
 	}else {
@@ -102,10 +101,123 @@ private void Denytransaction() {
 }
 
 private void getAlltransaction() {
-	for(transaction transaction:ReportBL.gettransaction()) {
-		System.out.println(transaction);
+	//variables for program
+	Boolean keepGoing = true;
+	int userid = 0;
+	String Mchoice = "";
+	
+	//2 cases
+	do {
+	System.out.println("[1] i am employee");
+	System.out.println("[2] i am manager");
+	System.out.println("[x] Quit");
+	String authority = myScanner.nextLine();
+	
+	switch(authority) {
+	case "1":
+		System.out.println("Please enter you employee id: ");
+		do {
+			if (myScanner.hasNextInt()){
+				userid = myScanner.nextInt();
+				for(transaction user:ReportBL.gettransaction()) {
+					if(user.getUserid() == userid) {
+						System.out.println(user);
+					}}
+				keepGoing = false;
+			}else if(myScanner.nextLine() == "x") {
+				break;
+			}else {
+				System.out.println("invaild employee id please enter employee id: ");
+				myScanner.nextLine();
+		}}while(keepGoing);	
+	case "2":
+		do {
+		System.out.println("[1] list all records");
+		System.out.println("[2] list 1 employee's records");
+		System.out.println("[3] list all approved records");
+		System.out.println("[4] list all denied records");
+		System.out.println("[5] list all pending records");
+		System.out.println("[x] Quit");
+		Mchoice = myScanner.nextLine();
+		switch(Mchoice) {
+		case "1":
+			for(transaction transaction:ReportBL.gettransaction()) {
+				System.out.println(transaction);
+			}
+			keepGoing = false;
+			break;
+		case "2":
+			System.out.println("Please enter a employee id: ");
+			do {
+				if (myScanner.hasNextInt()){
+					userid = myScanner.nextInt();
+					for(transaction user:ReportBL.gettransaction()) {
+					if(user.getUserid() == userid) {
+						System.out.println(user);
+					}}
+					keepGoing = false;
+					break;}
+				else if(myScanner.nextLine() == "x") {
+					break;
+				}else {
+					System.out.println("invaild employee id please enter employee id: ");
+					myScanner.nextLine();
+			}}while(keepGoing);
+		case "3":
+			//modify find id to find approved
+			transaction helper = new transaction(0,1.0,"zero","zero");
+			helper.Approve();
+			for(transaction transaction:ReportBL.gettransaction()) {
+				if(transaction.getState() == helper.getState()) {
+					System.out.println(transaction);
+			}}
+			keepGoing = false;
+			break;
+		case "4":
+			//modify find id to find denied
+			transaction helperd = new transaction(0,1.0,"zero","zero");
+			helperd.Deny();
+			for(transaction transaction:ReportBL.gettransaction()) {
+				if(transaction.getState() == helperd.getState()) {
+					System.out.println(transaction);
+			}}
+			keepGoing = false;
+			break;
+		case "5":
+			//modify find id to find pending
+			transaction helperp = new transaction(0,1.0,"zero","zero");
+			for(transaction transaction:ReportBL.gettransaction()) {
+				if(transaction.getState() == helperp.getState()) {
+					System.out.println(transaction);
+			}}
+			break;
+		case "x":
+			System.out.println("good day");
+			keepGoing = false;
+			break;
+			
+		}}while(keepGoing);
+	case "x":
+		System.out.println("good day");
+		keepGoing = false;
+		break;
+	}}while(keepGoing);
+	
+	
+	//employee leads to 1
+	
+	//manager  leads to 1-5
+	
+	//1 list all with specific employee id
+	
+	//2 warning only manager list all
+	
+	//3 warning only manager list all approved
+	
+	//4 warning only manager list all denied
+	
+	//5 warning only manager list all pending
 	}
-}
 
 private void createtransaction() {
 	boolean keepGoing = true;

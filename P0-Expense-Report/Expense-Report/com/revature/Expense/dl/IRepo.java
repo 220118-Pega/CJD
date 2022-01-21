@@ -7,5 +7,6 @@ import com.revature.Expense.models.transaction;
 public interface IRepo {
 	public void addtransaction(transaction newtran);
 	List<transaction> gettransaction();
-	transaction gettransactionbyId(int id);
+	transaction gettransactionByTranId(int id);
+	transaction gettransactionByUserId(int id);
 }

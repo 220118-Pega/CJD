@@ -34,7 +34,7 @@ public List<transaction> gettransaction() {
 
 //creats a dummy in case of failure and searches through  the database for a match returns match if found returns dummy if not
 @Override
-public transaction gettransactionbyId(int id) {
+public transaction gettransactionByTranId(int id) {
 	//userid,amount,date,type,id,status
 	transaction foundtran = new transaction(0,0,"zero","nothing");
 	for(transaction transaction:reportoftran) {
@@ -43,4 +43,18 @@ public transaction gettransactionbyId(int id) {
 		}
 	}
 	return foundtran;
-}}
+}
+
+@Override
+public transaction gettransactionByUserId(int id) {
+	//userid,amount,date,type,id,status
+	transaction foundtran = new transaction(0,0,"zero","nothing");
+	for(transaction transaction:reportoftran) {
+		if(transaction.getUserid() == id) {
+			foundtran = transaction;
+		}
+	}
+	return foundtran;
+}
+
+}

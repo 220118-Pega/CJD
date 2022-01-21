@@ -22,7 +22,11 @@ public class ReportBL implements RReportBL{
 	public List<transaction> gettransaction(){
 		return repo.gettransaction();
 	}
-	public transaction gettransactionById(int id) {
-		return repo.gettransactionbyId(id);
+	public transaction gettransactionByTranId(int id) {
+		return repo.gettransactionByTranId(id);
+	}
+	public transaction gettransactionByUserId(int id) {
+		return repo.gettransactionByUserId(id);
 	}
 }
+

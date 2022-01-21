@@ -8,5 +8,6 @@ public interface RReportBL {
 	void addtransaction(transaction tran);
 	
 	List<transaction> gettransaction();
-	transaction gettransactionById(int id);
+	transaction gettransactionByTranId(int id);
+	transaction gettransactionByUserId(int id);
 }

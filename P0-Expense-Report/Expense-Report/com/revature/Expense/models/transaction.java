@@ -19,8 +19,21 @@ public class transaction {
 	private status state;
 	
 	//setters and getters
+	
 	public int getTransactionid() {
 		return transactionid;
+	}
+	public transactiontype getType() {
+		return type;
+	}
+	public void setType(transactiontype type) {
+		this.type = type;
+	}
+	public status getState() {
+		return state;
+	}
+	public void setState(status state) {
+		this.state = state;
 	}
 	public String getDescritpion() {
 		return descritpion;
