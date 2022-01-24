@@ -63,6 +63,9 @@ public class transaction {
 		this.date = date;
 	}
 	//enum setters for differnt states
+	public void Pending() {
+		this.state = com.revature.Expense.models.transaction.status.Pending;
+	}
 	public void Approve() {
 		this.state = com.revature.Expense.models.transaction.status.Approved;
 	}

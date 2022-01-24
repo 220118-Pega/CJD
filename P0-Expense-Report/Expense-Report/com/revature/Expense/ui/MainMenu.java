@@ -94,12 +94,7 @@ private void getAlltransaction() {
 	
 	switch(authority) {
 	case "1":
-		EmployeeIdRequest();
-		userid = userIntAnswer();
-		for(transaction user:ReportBL.gettransaction()) {
-			if(user.getUserid() == userid) {
-				System.out.println(user);
-			}}
+		GetEmpRecords();
 		keepGoing = false;
 		break;
 	case "2":
@@ -114,51 +109,39 @@ private void getAlltransaction() {
 			keepGoing = false;
 			break;
 		case "2":
-			EmployeeIdRequest();
-			userid = userIntAnswer();
-			for(transaction user:ReportBL.gettransaction()) {
-				if(user.getUserid() == userid) {
-					System.out.println(user);
-					}}
+			GetEmpRecords();
 			keepGoing = false;
 			break;
 		case "3":
 			//modify find id to find approved
-			transaction helper = new transaction(0,1.0,"zero","zero");
-			helper.Approve();
-			for(transaction transaction:ReportBL.gettransaction()) {
-				if(transaction.getState() == helper.getState()) {
-					System.out.println(transaction);
-			}}
+			GetAllOfState(Integer.parseInt(Mchoice));
 			keepGoing = false;
 			break;
 		case "4":
 			//modify find id to find denied
-			transaction helperd = new transaction(0,1.0,"zero","zero");
-			helperd.Deny();
-			for(transaction transaction:ReportBL.gettransaction()) {
-				if(transaction.getState() == helperd.getState()) {
-					System.out.println(transaction);
-			}}
+			GetAllOfState(Integer.parseInt(Mchoice));
 			keepGoing = false;
 			break;
 		case "5":
 			//modify find id to find pending
-			transaction helperp = new transaction(0,1.0,"zero","zero");
-			for(transaction transaction:ReportBL.gettransaction()) {
-				if(transaction.getState() == helperp.getState()) {
-					System.out.println(transaction);
-			}}
+			GetAllOfState(Integer.parseInt(Mchoice));
+			keepGoing = false;
 			break;
 		case "x":
 			System.out.println("good day");
 			keepGoing = false;
+			break;
+		default:
+			System.out.println("Please only put listed options");
 			break;
 			
 		}}while(keepGoing);
 	case "x":
 		System.out.println("good day");
 		keepGoing = false;
+		break;
+	default:
+		System.out.println("Please only put listed options");
 		break;
 	}}while(keepGoing);
 	
@@ -243,6 +226,24 @@ private void createtransaction() {
 }
 
 //common tasks method out for ease of code
+private void GetEmpRecords() {
+	EmployeeIdRequest();
+	int userid = userIntAnswer();
+	for(transaction user:ReportBL.gettransaction()) {
+		if(user.getUserid() == userid) {
+			System.out.println(user);
+			}}
+}
+private void GetAllOfState(int choice) {
+	transaction helper = new transaction(0,1.0,"zero","zero");
+	if (choice == 3) {helper.Approve();}
+	if (choice == 4) {helper.Deny();}
+	if (choice == 5) {helper.Pending();}
+	for(transaction transaction:ReportBL.gettransaction()) {
+		if(transaction.getState() == helper.getState()) {
+			System.out.println(transaction);
+	}}
+}
 private int userIntAnswer() {
 	int id = 0;
 	boolean keepGoing = true;
