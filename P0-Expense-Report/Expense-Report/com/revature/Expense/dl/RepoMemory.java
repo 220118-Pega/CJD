@@ -32,7 +32,7 @@ public List<transaction> gettransaction() {
 	return RepoMemory.reportoftran;
 }
 
-//creats a dummy in case of failure and searches through  the database for a match returns match if found returns dummy if not
+//creats a dummy in case of failure and searches through  the database for a match by transaction id returns match if found returns dummy if not
 @Override
 public transaction gettransactionByTranId(int id) {
 	//userid,amount,date,type,id,status
@@ -44,7 +44,7 @@ public transaction gettransactionByTranId(int id) {
 	}
 	return foundtran;
 }
-//creates a dummy in case of failure
+//creates a dummy in case of failure and searches through the database for a match by employee id returns match if found returns dummy if not
 @Override
 public transaction gettransactionByUserId(int id) {
 	//userid,amount,date,type,id,status

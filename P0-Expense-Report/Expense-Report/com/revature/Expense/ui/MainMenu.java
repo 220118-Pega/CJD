@@ -45,7 +45,7 @@ public void start() {
 	}while(keepGoing);
 }
 
-
+//approves a transaction
 private void Approvetransaction() {
 	// if given incorect id num then a dummy is changed need to give warning
 	transaction updatetran = Pendingtransaction();
@@ -66,7 +66,6 @@ private void Denytransaction() {
 private void getAlltransaction() {
 	//variables for program
 	Boolean keepGoing = true;
-	int userid = 0;
 	String Mchoice = "";
 	
 	//employee or manager
@@ -81,6 +80,7 @@ private void getAlltransaction() {
 		keepGoing = false;
 		break;
 	//if manager they have access to manager menu
+	//a manager isnt auto moved out of this screen they need to push x to leave
 	case "2":
 		do {
 		MainManagerMenu();
@@ -91,28 +91,18 @@ private void getAlltransaction() {
 			for(transaction transaction:ReportBL.gettransaction()) {
 				System.out.println(transaction);
 			}
-			keepGoing = false;
-			break;
 		//manager gets records for a single employee
 		case "2":
 			GetEmpRecords();
-			keepGoing = false;
-			break;
 		//manager gets all approved records
 		case "3":
 			GetAllOfState(Integer.parseInt(Mchoice));
-			keepGoing = false;
-			break;
 		//manager gets all denied records
 		case "4":
 			GetAllOfState(Integer.parseInt(Mchoice));
-			keepGoing = false;
-			break;
 		//manager gets all pending records
 		case "5":
 			GetAllOfState(Integer.parseInt(Mchoice));
-			keepGoing = false;
-			break;
 		// there are 2 loops the manager loop and the general function loop so both have default and exit statments at the end
 		case "x":
 			System.out.println("good day");
@@ -159,7 +149,10 @@ private void createtransaction() {
 	//a do while loop to get an accurate emp id
 	EmployeeIdRequest();
 	userid = userIntAnswer();
-	myScanner.nextLine();
+	if (userid == 0) {
+		System.out.print("Good bye \n");
+	}
+	else {
 	
 	//do while loop to get a accurate tran amout
 	System.out.println("Please enter transaction amount: ");
@@ -172,7 +165,6 @@ private void createtransaction() {
 			myScanner.nextLine();
 	}}while(keepGoing);
 	keepGoing = true;
-	myScanner.nextLine();
 		
 	System.out.println("Please enter date of transaction: ");
 	String date = myScanner.nextLine();
@@ -212,7 +204,7 @@ private void createtransaction() {
 	ReportBL.addtransaction(newReport);
 	System.out.println(newReport);
 	
-}
+}}
 
 
 //contains the simplifications to above code by taking repeating code and turning those to a method
@@ -245,6 +237,7 @@ private void GetEmpRecords() {
 		if(user.getUserid() == userid) {
 			System.out.println(user);
 			}}
+	myScanner.nextLine();//this is to clear the line so things arent left for future checks
 }
 //prints all transactions of a type decided by number manager entered
 private void GetAllOfState(int choice) {
@@ -256,22 +249,27 @@ private void GetAllOfState(int choice) {
 		if(transaction.getState() == helper.getState()) {
 			System.out.println(transaction);
 	}}
+	myScanner.nextLine();//this is the clear it for returning to method
 }
 //takes person through a loop to get a accurate id number with 0 being the dummny number if they exit early
 private int userIntAnswer() {
 	int id = 0;
 	boolean keepGoing = true;
-	do {
+	while(keepGoing) {
 			if (myScanner.hasNextInt()){
 					id = myScanner.nextInt();
 					keepGoing = false;
-			}else if(myScanner.nextLine() == "x") {
-				keepGoing = false;
-				break;
+					break;
 			}
 			else {
-				System.out.println("invaild id please enter vaild id: ");
-	}}while(keepGoing);
+				String answer = myScanner.nextLine();
+				if(answer.contains("x")) {
+					keepGoing = false;
+				}
+				else {
+					System.out.println("invaild id please enter vaild id: ");
+					System.out.println("or enter x to quit:");}
+	}}
 	return id;
 }
 //holding text blocks for ease of editing
@@ -301,7 +299,8 @@ private void MainManagerMenu() {
 	System.out.println("[x] Quit");
 }
 private void EmployeeIdRequest() {
-	System.out.println("Please enter a employee id: ");
+	System.out.println("Please enter a employee id");
+	System.out.println("or press x to exit: ");
 }
 private void MainAllTransactionMenu() {
 	System.out.println("[1] i am employee");
