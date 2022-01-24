@@ -44,7 +44,7 @@ public transaction gettransactionByTranId(int id) {
 	}
 	return foundtran;
 }
-
+//creates a dummy in case of failure
 @Override
 public transaction gettransactionByUserId(int id) {
 	//userid,amount,date,type,id,status

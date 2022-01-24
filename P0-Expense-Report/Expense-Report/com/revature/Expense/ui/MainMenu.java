@@ -45,24 +45,6 @@ public void start() {
 	}while(keepGoing);
 }
 
-//the similar process of approve and deny
-private transaction Pendingtransaction() {
-	int tranid = 0;
-	System.out.println("Enter the id of the transaction: ");
-	tranid = userIntAnswer();
-	transaction updatetran = ReportBL.gettransactionByTranId(tranid);
-	return updatetran;
-}
-private boolean confirm(transaction updatetran) {
-	boolean real = false;
-	if(updatetran.getTransactionid() == 0) {
-		System.out.println("No Record of Transaction with that id check id used.");
-		myScanner.nextLine();
-	}else {
-		real = true;
-	}
-	return real;
-}
 
 private void Approvetransaction() {
 	// if given incorect id num then a dummy is changed need to give warning
@@ -71,7 +53,7 @@ private void Approvetransaction() {
 		updatetran.Approve();
 		System.out.println("Approved");
 	}
-
+//denys a transaction
 private void Denytransaction() {
 	// if given incorect id num then a dummy is changed need to give warning
 	transaction updatetran = Pendingtransaction();
@@ -80,53 +62,58 @@ private void Denytransaction() {
 		System.out.println("Denied");
 	}	
 }
-
+//is the menu to retrive records from memory repo has options for employees and managers currently trusts people to tell the truth
 private void getAlltransaction() {
 	//variables for program
 	Boolean keepGoing = true;
 	int userid = 0;
 	String Mchoice = "";
 	
-	//2 cases
+	//employee or manager
 	do {
 	MainAllTransactionMenu();
 	String authority = myScanner.nextLine();
 	
 	switch(authority) {
+	//if employee they only can access their own records
 	case "1":
 		GetEmpRecords();
 		keepGoing = false;
 		break;
+	//if manager they have access to manager menu
 	case "2":
 		do {
 		MainManagerMenu();
 		Mchoice = myScanner.nextLine();
 		switch(Mchoice) {
+		//manager prints all transactions
 		case "1":
 			for(transaction transaction:ReportBL.gettransaction()) {
 				System.out.println(transaction);
 			}
 			keepGoing = false;
 			break;
+		//manager gets records for a single employee
 		case "2":
 			GetEmpRecords();
 			keepGoing = false;
 			break;
+		//manager gets all approved records
 		case "3":
-			//modify find id to find approved
 			GetAllOfState(Integer.parseInt(Mchoice));
 			keepGoing = false;
 			break;
+		//manager gets all denied records
 		case "4":
-			//modify find id to find denied
 			GetAllOfState(Integer.parseInt(Mchoice));
 			keepGoing = false;
 			break;
+		//manager gets all pending records
 		case "5":
-			//modify find id to find pending
 			GetAllOfState(Integer.parseInt(Mchoice));
 			keepGoing = false;
 			break;
+		// there are 2 loops the manager loop and the general function loop so both have default and exit statments at the end
 		case "x":
 			System.out.println("good day");
 			keepGoing = false;
@@ -161,6 +148,8 @@ private void getAlltransaction() {
 	//5 warning only manager list all pending
 	}
 
+//creates a transaction from given info and uploads it to memory repo
+//takes someone through proccess to create a transaction and upload to memory repo
 private void createtransaction() {
 	boolean keepGoing = true;
 	//all the variables
@@ -189,10 +178,10 @@ private void createtransaction() {
 	String date = myScanner.nextLine();
 	System.out.println("Please enter a descrption of the transaction: ");
 	String descrption = myScanner.nextLine();
-	//inserting into transaction
+	//making new transaction with info
 	transaction newReport = new transaction(userid,transactionamount,date,descrption);
 	
-	
+	// adding the right type
 	while(keepGoing) {
 	MainTypeMenu();
 	String transactiontype = myScanner.nextLine();
@@ -225,6 +214,29 @@ private void createtransaction() {
 	
 }
 
+
+//contains the simplifications to above code by taking repeating code and turning those to a method
+//the similar process of approve and deny
+private transaction Pendingtransaction() {
+	int tranid = 0;
+	System.out.println("Enter the id of the transaction: ");
+	tranid = userIntAnswer();
+	transaction updatetran = ReportBL.gettransactionByTranId(tranid);
+	return updatetran;
+}
+//confirms that the transaction is a real transaction and not the dummy transaction
+private boolean confirm(transaction updatetran) {
+	boolean real = false;
+	if(updatetran.getTransactionid() == 0) {
+		System.out.println("No Record of Transaction with that id check id used.");
+		myScanner.nextLine();
+	}else {
+		real = true;
+	}
+	return real;
+}
+//approves a transaction
+//prints all employee transactions
 //common tasks method out for ease of code
 private void GetEmpRecords() {
 	EmployeeIdRequest();
@@ -234,6 +246,7 @@ private void GetEmpRecords() {
 			System.out.println(user);
 			}}
 }
+//prints all transactions of a type decided by number manager entered
 private void GetAllOfState(int choice) {
 	transaction helper = new transaction(0,1.0,"zero","zero");
 	if (choice == 3) {helper.Approve();}
@@ -244,6 +257,7 @@ private void GetAllOfState(int choice) {
 			System.out.println(transaction);
 	}}
 }
+//takes person through a loop to get a accurate id number with 0 being the dummny number if they exit early
 private int userIntAnswer() {
 	int id = 0;
 	boolean keepGoing = true;
@@ -261,6 +275,8 @@ private int userIntAnswer() {
 	return id;
 }
 //holding text blocks for ease of editing
+
+//these are all just strings that were repeated so put them down here to make code above better
 private void MainTextMenu() {
 	System.out.println("Welcome to expense reports");
 	System.out.println("[1] Create a reinburstment request");

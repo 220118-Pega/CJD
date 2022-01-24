@@ -7,6 +7,7 @@ package com.revature.Expense.models;
  *likely will need to outsource user id from it
  */
 public class transaction {
+	
 	//attributes 
 	private int transactionid;
 	private int userid;
@@ -19,7 +20,6 @@ public class transaction {
 	private status state;
 	
 	//setters and getters
-	
 	public int getTransactionid() {
 		return transactionid;
 	}
@@ -62,6 +62,7 @@ public class transaction {
 	public void setDate(String date) {
 		this.date = date;
 	}
+	
 	//enum setters for differnt states
 	public void Pending() {
 		this.state = com.revature.Expense.models.transaction.status.Pending;
@@ -84,6 +85,7 @@ public class transaction {
 	public void Other() {
 		this.type = com.revature.Expense.models.transaction.transactiontype.Other;
 	}
+	
 	//constructors
 	public transaction(int userid, double transactionamount, String date, String descritpion) {
 		super();
@@ -96,8 +98,8 @@ public class transaction {
 		this.state =  com.revature.Expense.models.transaction.status.Pending;
 	}
 //userid,amount,date,type,id,status
-	//methods
 	
+	//methods
 	@Override
 	public String toString() {
 		return "Report[employee id="+ userid + ", amount=" + transactionamount + ", date=" + date + ", type=" + type.toString() +", transaction id=" + transactionid + ", status=" + state.toString() + "  ]";

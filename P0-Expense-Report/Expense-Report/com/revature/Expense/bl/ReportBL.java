@@ -13,6 +13,7 @@ import com.revature.Expense.models.transaction;
 public class ReportBL implements RReportBL{
 	private IRepo repo;
 	
+	//calls repo with input from the ui
 	public ReportBL(IRepo repo) {
 		this.repo = repo;
 	}
