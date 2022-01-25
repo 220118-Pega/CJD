@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.Expense.models.transaction;
+import com.revature.Expense.models.userInfo;
 
 /**
  * is the point where the data lives and can be messed with and returned
@@ -12,12 +13,87 @@ import com.revature.Expense.models.transaction;
  */
 public class RepoMemory implements IRepo {
 	private static List<transaction> reportoftran;
+	private static List<userInfo> Listofemp;
 	private static int LatestId = 1;
 	
 	public RepoMemory() {
-		reportoftran = new ArrayList<transaction>();			
+		reportoftran = new ArrayList<transaction>();
+		Listofemp = new ArrayList<userInfo>();
 	}
 
+public void IntializeEmployees() {
+	//yes a for loop would be nice
+	int empid = 0;
+	String name = "the lord";
+	boolean isM = true;
+	int Mid = 0;
+	//1 god
+	Listofemp.add(new userInfo(empid, name, isM, Mid));
+	
+	//3 managers
+	empid = 99;
+	name = "London Revival";
+	isM = true;
+	Mid++;
+	Listofemp.add(new userInfo(empid, name, isM, Mid));
+	empid--;
+	name = "Allo Cats";
+	isM = true;
+	Mid++;
+	Listofemp.add(new userInfo(empid, name, isM, Mid));
+	empid--;
+	name = "King Blond";
+	isM = true;
+	Mid++;
+	Listofemp.add(new userInfo(empid, name, isM, Mid));
+	
+	//9 employees
+	empid = 1;
+	name = "Oscar Jeffery";
+	isM = false;
+	Mid = 1;
+	Listofemp.add(new userInfo(empid, name, isM, Mid));
+	empid++;
+	name = "Xander Jolly";
+	isM = false;
+	Mid = 1;
+	Listofemp.add(new userInfo(empid, name, isM, Mid));
+	empid++;
+	name = "Pete Malfoy";
+	isM = false;
+	Mid = 1;
+	Listofemp.add(new userInfo(empid, name, isM, Mid));
+	empid++;
+	name = "Madeleine Colton";
+	isM = false;
+	Mid = 2;
+	Listofemp.add(new userInfo(empid, name, isM, Mid));
+	empid++;
+	name = "Millie Johnson";
+	isM = false;
+	Mid = 2;
+	Listofemp.add(new userInfo(empid, name, isM, Mid));
+	empid++;
+	name = "Maisie Morgan";
+	isM = false;
+	Mid = 2;
+	Listofemp.add(new userInfo(empid, name, isM, Mid));
+	empid++;
+	name = "Jess Davis";
+	isM = false;
+	Mid = 3;
+	Listofemp.add(new userInfo(empid, name, isM, Mid));
+	empid++;
+	name = "Oli Jones";
+	isM = false;
+	Mid = 3;
+	Listofemp.add(new userInfo(empid, name, isM, Mid));
+	empid++;
+	name = "Charlotte Rodriguez";
+	isM = false;
+	Mid = 3;
+	Listofemp.add(new userInfo(empid, name, isM, Mid));
+}
 //adds a transaction to the data base increments global transaction id
 @Override
 public void addtransaction(transaction newtran) {

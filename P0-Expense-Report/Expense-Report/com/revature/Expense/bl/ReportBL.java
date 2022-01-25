@@ -17,6 +17,9 @@ public class ReportBL implements RReportBL{
 	public ReportBL(IRepo repo) {
 		this.repo = repo;
 	}
+	public void IntializeEmployees() {
+		repo.IntializeEmployees();
+	}
 	public  void addtransaction(transaction tran) {
 		repo.addtransaction(tran);
 	}
