@@ -37,6 +37,9 @@ public void start() {
 			GoodBye();
 			keepGoing = false;
 			break;
+		case "t"://commet out after testing
+			LoadTestingData();
+			break;
 		default:
 			PickRealOption();
 			break;
@@ -76,7 +79,7 @@ private void getAlltransaction() {
 	switch(authority) {
 	//if employee they only can access their own records
 	case "1":
-		GetEmpRecords();
+		GetEmpRecords();// needed double x to get out investagate
 		keepGoing = false;
 		break;
 	//if manager they have access to manager menu
@@ -87,13 +90,13 @@ private void getAlltransaction() {
 		Mchoice = myScanner.nextLine();
 		switch(Mchoice) {
 		//manager prints all transactions
-		case "1":
+		case "1"://entering 1 may have it default to employee section
 			for(transaction transaction:ReportBL.gettransaction()) {
 				System.out.println(transaction);
 			}
 		//manager gets records for a single employee
 		case "2":
-			GetEmpRecords();
+			GetEmpRecords();// error printed out too many people
 		//manager gets all approved records
 		case "3":
 			GetAllOfState(Integer.parseInt(Mchoice));
@@ -105,7 +108,6 @@ private void getAlltransaction() {
 			GetAllOfState(Integer.parseInt(Mchoice));
 		// there are 2 loops the manager loop and the general function loop so both have default and exit statments at the end
 		case "x":
-			GoodBye();
 			keepGoing = false;
 			break;
 		default:
@@ -145,7 +147,7 @@ private void createtransaction() {
 	//all the variables
 	int userid = 0;
 	double transactionamount = 0;
-	int quit = 0;
+	int quit = 0;// so quiting from transaction type is easy
 	//getting all variable info from employee
 	//a do while loop to get an accurate emp id
 	EmployeeIdRequest();
@@ -157,14 +159,15 @@ private void createtransaction() {
 	
 	//do while loop to get a accurate tran amout
 	System.out.println("Please enter transaction amount: ");
+	System.out.println("or enter x to quit: ");
 	while(keepGoing) {
 		if (myScanner.hasNextDouble()){
 				transactionamount = myScanner.nextDouble();
 				keepGoing = false;
 		}
 		else {
-			String answer = myScanner.nextLine();
-			if(answer.contains("x")) {
+			String notDoubleAnswer = myScanner.nextLine();
+			if(notDoubleAnswer.equals("x")) {
 				keepGoing = false;
 			}
 			else {
@@ -176,6 +179,7 @@ private void createtransaction() {
 	}
 	else {
 	keepGoing = true;
+	myScanner.nextLine();
 	//they can do anything to date need to make them enter a date format
 	System.out.println("Please enter date of transaction: ");
 	System.out.println("or enter x to quit:");
@@ -232,6 +236,7 @@ private void createtransaction() {
 	//saving
 	ReportBL.addtransaction(newReport);
 	System.out.println(newReport);
+	System.out.println("");
 	
 }}}}}
 
@@ -243,7 +248,7 @@ private transaction Pendingtransaction() {
 	System.out.println("Enter the id of the transaction: ");
 	tranid = userIntAnswer();
 	transaction updatetran = ReportBL.gettransactionByTranId(tranid);
-	return updatetran;
+	return updatetran;//geting double main menu probably just need to add scanner to clear it
 }
 //confirms that the transaction is a real transaction and not the dummy transaction
 private boolean confirm(transaction updatetran) {
@@ -261,7 +266,7 @@ private boolean confirm(transaction updatetran) {
 private void GetEmpRecords() {
 	EmployeeIdRequest();
 	int userid = userIntAnswer();
-	for(transaction user:ReportBL.gettransaction()) {
+	for(transaction user:ReportBL.gettransactionByUserId(userid)) {
 		if(user.getUserid() == userid) {
 			System.out.println(user);
 			}}
@@ -291,8 +296,9 @@ private int userIntAnswer() {
 			}
 			else {
 				String answer = myScanner.nextLine();
-				if(answer.contains("x")) {
+				if(answer.equals("x")) {
 					keepGoing = false;
+					break;
 				}
 				else {
 					System.out.println("invaild id please enter vaild id: ");
@@ -316,6 +322,7 @@ private void MainTextMenu() {
 	System.out.println("[3] Approve request");
 	System.out.println("[4] Deny request");
 	System.out.println("[x] Exit");
+	System.out.println("[t] Testbatch");//comment out after testing
 }
 private void MainTypeMenu() {
 	System.out.println("please enter type of transaction");
@@ -343,6 +350,193 @@ private void MainAllTransactionMenu() {
 	System.out.println("[x] Quit");
 }
 
+//creats a bunch of transactions so i dont have to manually enter for testing
+private void LoadTestingData() {
+	int user = 0;
+	double am = 0;
+	String date = "";
+	String des = "";
+	
+	user = 1;
+	am = 12.50;
+	date = "15";
+	
+	des = "R1";
+	transaction NewReport1 =  new transaction(user,am,date,des);
+	NewReport1.Food();
+	ReportBL.addtransaction(NewReport1);
+	
+	des = "R2";
+	transaction NewReport2 = new transaction(user,am,date,des);
+	NewReport2.Food();
+	ReportBL.addtransaction(NewReport2);
+	
+	des = "R3";
+	transaction NewReport3 = new transaction(user,am,date,des);
+	NewReport3.Food();
+	ReportBL.addtransaction(NewReport3);
+	
+	des = "R4";
+	transaction NewReport4 = new transaction(user,am,date,des);
+	NewReport4.Approve();
+	NewReport4.Food();
+	ReportBL.addtransaction(NewReport4);
+	
+	user = 2;
+	des = "R5";
+	transaction NewReport5 = new transaction(user,am,date,des);
+	NewReport5.Approve();
+	NewReport5.Food();
+	ReportBL.addtransaction(NewReport5);
+	
+	des = "R6";
+	transaction NewReport6 = new transaction(user,am,date,des);
+	NewReport6.Deny();
+	NewReport6.Food();
+	ReportBL.addtransaction(NewReport6);
+	
+	des = "R7";
+	transaction NewReport7 = new transaction(user,am,date,des);
+	NewReport7.Deny();
+	NewReport7.Food();
+	ReportBL.addtransaction(NewReport7);
+	
+	des = "R8";
+	transaction NewReport8 = new transaction(user,am,date,des);
+	NewReport8.Food();
+	ReportBL.addtransaction(NewReport8);
+	
+	des = "R9";
+	transaction NewReport9 = new transaction(user,am,date,des);
+	NewReport9.Food();
+	ReportBL.addtransaction(NewReport9);
+	
+	user = 3;
+	des = "R10";
+	transaction NewReport10 = new transaction(user,am,date,des);
+	NewReport10.Food();
+	ReportBL.addtransaction(NewReport10);
+	
+	des = "R11";
+	transaction NewReport11 = new transaction(user,am,date,des);
+	NewReport11.Deny();
+	NewReport11.Food();
+	ReportBL.addtransaction(NewReport11);
+	
+	user = 4;
+	des = "R12";
+	transaction NewReport12 = new transaction(user,am,date,des);
+	NewReport12.Deny();
+	NewReport12.Food();
+	ReportBL.addtransaction(NewReport12);
+	
+	des = "R13";
+	transaction NewReport13 = new transaction(user,am,date,des);
+	NewReport13.Deny();
+	NewReport13.Food();
+	ReportBL.addtransaction(NewReport13);
+	
+	des = "R14";
+	transaction NewReport14 = new transaction(user,am,date,des);
+	NewReport14.Approve();
+	NewReport14.Food();
+	ReportBL.addtransaction(NewReport14);
+	
+	des = "R15";
+	transaction NewReport15 = new transaction(user,am,date,des);
+	NewReport15.Approve();
+	NewReport15.Food();
+	ReportBL.addtransaction(NewReport15);
+	
+	user = 5;
+	des = "R16";
+	transaction NewReport16 = new transaction(user,am,date,des);
+	NewReport16.Food();
+	ReportBL.addtransaction(NewReport16);
+	
+	user = 6;
+	des = "R17";
+	transaction NewReport17 = new transaction(user,am,date,des);
+	NewReport17.Food();
+	ReportBL.addtransaction(NewReport17);
+	
+	des = "R18";
+	transaction NewReport18 = new transaction(user,am,date,des);
+	NewReport18.Food();
+	ReportBL.addtransaction(NewReport18);
+	
+	des = "R19";
+	transaction NewReport19 = new transaction(user,am,date,des);
+	NewReport19.Approve();
+	NewReport19.Food();
+	ReportBL.addtransaction(NewReport19);
+	
+	user = 7;
+	des = "R20";
+	transaction NewReport20 = new transaction(user,am,date,des);
+	NewReport20.Approve();
+	NewReport20.Food();
+	ReportBL.addtransaction(NewReport20);
+	
+	des = "R21";
+	transaction NewReport21 = new transaction(user,am,date,des);
+	NewReport21.Approve();
+	NewReport21.Food();
+	ReportBL.addtransaction(NewReport21);
+	
+	des = "R22";
+	transaction NewReport22 = new transaction(user,am,date,des);
+	NewReport22.Deny();
+	NewReport22.Food();
+	ReportBL.addtransaction(NewReport22);
+	
+	des = "R23";
+	transaction NewReport23 = new transaction(user,am,date,des);
+	NewReport23.Deny();
+	NewReport23.Food();
+	ReportBL.addtransaction(NewReport23);
+	
+	des = "R24";
+	transaction NewReport24 = new transaction(user,am,date,des);
+	NewReport24.Food();
+	ReportBL.addtransaction(NewReport24);
+	
+	user = 8;
+	des = "R25";
+	transaction NewReport25 = new transaction(user,am,date,des);
+	NewReport25.Food();
+	ReportBL.addtransaction(NewReport25);
+	
+	des = "R26";
+	transaction NewReport26 = new transaction(user,am,date,des);
+	NewReport26.Food();
+	ReportBL.addtransaction(NewReport26);
+	
+	des = "R27";
+	transaction NewReport27 = new transaction(user,am,date,des);
+	NewReport27.Deny();
+	NewReport27.Food();
+	ReportBL.addtransaction(NewReport27);
+	
+	des = "R28";
+	transaction NewReport28 = new transaction(user,am,date,des);
+	NewReport28.Deny();
+	NewReport28.Food();
+	ReportBL.addtransaction(NewReport28);
+	
+	des = "R29";
+	transaction NewReport29 = new transaction(user,am,date,des);
+	NewReport29.Deny();
+	NewReport29.Food();
+	ReportBL.addtransaction(NewReport29);
+	
+	des = "R30";
+	transaction NewReport30 = new transaction(user,am,date,des);
+	NewReport30.Approve();
+	NewReport30.Food();
+	ReportBL.addtransaction(NewReport30);
+	
+}
 
 
 

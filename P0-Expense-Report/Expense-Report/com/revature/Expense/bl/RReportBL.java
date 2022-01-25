@@ -10,5 +10,5 @@ public interface RReportBL {
 	
 	List<transaction> gettransaction();
 	transaction gettransactionByTranId(int id);
-	transaction gettransactionByUserId(int id);
+	List<transaction> gettransactionByUserId(int id);
 }

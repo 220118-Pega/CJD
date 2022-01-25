@@ -46,15 +46,19 @@ public transaction gettransactionByTranId(int id) {
 }
 //creates a dummy in case of failure and searches through the database for a match by employee id returns match if found returns dummy if not
 @Override
-public transaction gettransactionByUserId(int id) {
+public List<transaction> gettransactionByUserId(int id) {
 	//userid,amount,date,type,id,status
-	transaction foundtran = new transaction(0,0,"zero","nothing");
+	List<transaction> UserReports = new ArrayList<transaction>();
+	transaction dummytran = new transaction(0,0,"zero","nothing");
 	for(transaction transaction:reportoftran) {
 		if(transaction.getUserid() == id) {
-			foundtran = transaction;
+			UserReports.add(transaction);
 		}
 	}
-	return foundtran;
+	if(UserReports.isEmpty()) {
+		UserReports.add(dummytran);
+	}
+	return UserReports;
 }
 
 }

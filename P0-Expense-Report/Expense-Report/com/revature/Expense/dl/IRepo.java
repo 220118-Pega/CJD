@@ -8,5 +8,5 @@ public interface IRepo {
 	public void addtransaction(transaction newtran);
 	List<transaction> gettransaction();
 	transaction gettransactionByTranId(int id);
-	transaction gettransactionByUserId(int id);
+	List<transaction> gettransactionByUserId(int id);
 }
