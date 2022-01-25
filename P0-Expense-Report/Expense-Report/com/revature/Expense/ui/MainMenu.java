@@ -52,9 +52,10 @@ public void start() {
 private void Approvetransaction() {
 	// if given incorect id num then a dummy is changed need to give warning
 	transaction updatetran = Pendingtransaction();
-	if(confirm(updatetran))
+	if(confirm(updatetran)) {
 		updatetran.Approve();
-		System.out.println("Approved");
+		System.out.println("Approved");}
+	myScanner.nextLine();
 	}
 //denys a transaction
 private void Denytransaction() {
@@ -64,6 +65,7 @@ private void Denytransaction() {
 		updatetran.Deny();
 		System.out.println("Denied");
 	}	
+	myScanner.nextLine();
 }
 //is the menu to retrive records from memory repo has options for employees and managers currently trusts people to tell the truth
 private void getAlltransaction() {
@@ -181,7 +183,7 @@ private void createtransaction() {
 	String date = myScanner.nextLine();
 	if(date.equals("x")) {
 		GoodBye();
-	}
+	}else {
 	//they can say anything for descrption no need to control it
 	System.out.println("Please enter a descrption of the transaction: ");
 	System.out.println("or enter x to quit:");
@@ -233,7 +235,7 @@ private void createtransaction() {
 	System.out.println(newReport);
 	System.out.println("");
 	
-}}}}}
+}}}}}}
 
 
 //contains the simplifications to above code by taking repeating code and turning those to a method
