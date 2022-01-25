@@ -34,11 +34,11 @@ public void start() {
 			Denytransaction();
 			break;
 		case "x":
-			System.out.println("Dismissed");
+			GoodBye();
 			keepGoing = false;
 			break;
 		default:
-			System.out.println("Please only put listed options");
+			PickRealOption();
 			break;
 		}
 		
@@ -105,20 +105,20 @@ private void getAlltransaction() {
 			GetAllOfState(Integer.parseInt(Mchoice));
 		// there are 2 loops the manager loop and the general function loop so both have default and exit statments at the end
 		case "x":
-			System.out.println("good day");
+			GoodBye();
 			keepGoing = false;
 			break;
 		default:
-			System.out.println("Please only put listed options");
+			PickRealOption();
 			break;
 			
 		}}while(keepGoing);
 	case "x":
-		System.out.println("good day");
+		GoodBye();
 		keepGoing = false;
 		break;
 	default:
-		System.out.println("Please only put listed options");
+		PickRealOption();
 		break;
 	}}while(keepGoing);
 	
@@ -144,32 +144,54 @@ private void createtransaction() {
 	boolean keepGoing = true;
 	//all the variables
 	int userid = 0;
-	double transactionamount = 1.0;
+	double transactionamount = 0;
+	int quit = 0;
 	//getting all variable info from employee
 	//a do while loop to get an accurate emp id
 	EmployeeIdRequest();
 	userid = userIntAnswer();
 	if (userid == 0) {
-		System.out.print("Good bye \n");
+		GoodBye();
 	}
 	else {
 	
 	//do while loop to get a accurate tran amout
 	System.out.println("Please enter transaction amount: ");
-	do{
-		if(myScanner.hasNextDouble()){;
-			transactionamount = myScanner.nextDouble();
-			keepGoing = false;
-		}else {
-			System.out.println("invaild number please enter exact amount: ");
-			myScanner.nextLine();
-	}}while(keepGoing);
+	while(keepGoing) {
+		if (myScanner.hasNextDouble()){
+				transactionamount = myScanner.nextDouble();
+				keepGoing = false;
+		}
+		else {
+			String answer = myScanner.nextLine();
+			if(answer.contains("x")) {
+				keepGoing = false;
+			}
+			else {
+				System.out.println("invaild number please enter vaild amount: ");
+				System.out.println("or enter x to quit:");}
+		}}
+	if(transactionamount == 0) {
+		GoodBye();
+	}
+	else {
 	keepGoing = true;
-		
+	//they can do anything to date need to make them enter a date format
 	System.out.println("Please enter date of transaction: ");
+	System.out.println("or enter x to quit:");
 	String date = myScanner.nextLine();
+	if(date.equals("x")) {
+		GoodBye();
+	}
+	//they can say anything for descrption no need to control it
 	System.out.println("Please enter a descrption of the transaction: ");
+	System.out.println("or enter x to quit:");
 	String descrption = myScanner.nextLine();
+	if(descrption.equals("x")) {
+		GoodBye();
+	}
+	else {
+	
 	//making new transaction with info
 	transaction newReport = new transaction(userid,transactionamount,date,descrption);
 	
@@ -195,16 +217,23 @@ private void createtransaction() {
 		newReport.Other();
 		keepGoing = false;
 		break;
+	case "x":
+		keepGoing = false;
+		quit = 1;
+		break;
 	default:
-		System.out.println("Please only put listed options");
+		PickRealOption();
 		break;
 	}}
-	
+	if( quit == 1) {
+		GoodBye();
+	}
+	else {
 	//saving
 	ReportBL.addtransaction(newReport);
 	System.out.println(newReport);
 	
-}}
+}}}}}
 
 
 //contains the simplifications to above code by taking repeating code and turning those to a method
@@ -227,7 +256,6 @@ private boolean confirm(transaction updatetran) {
 	}
 	return real;
 }
-//approves a transaction
 //prints all employee transactions
 //common tasks method out for ease of code
 private void GetEmpRecords() {
@@ -275,6 +303,12 @@ private int userIntAnswer() {
 //holding text blocks for ease of editing
 
 //these are all just strings that were repeated so put them down here to make code above better
+private void PickRealOption() {
+	System.out.println("Please only put listed options");
+}
+private void GoodBye() {
+	System.out.println("Good Bye \n");
+}
 private void MainTextMenu() {
 	System.out.println("Welcome to expense reports");
 	System.out.println("[1] Create a reinburstment request");
@@ -284,11 +318,12 @@ private void MainTextMenu() {
 	System.out.println("[x] Exit");
 }
 private void MainTypeMenu() {
-	System.out.println("please enter type of transaction: ");
+	System.out.println("please enter type of transaction");
 	System.out.println("[1] Lodging");
 	System.out.println("[2] Travel");
 	System.out.println("[3] Food");
 	System.out.println("[4] Other");
+	System.out.println("[x] to quit");
 }
 private void MainManagerMenu() {
 	System.out.println("[1] list all records");
