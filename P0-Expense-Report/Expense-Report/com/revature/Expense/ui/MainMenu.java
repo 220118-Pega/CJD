@@ -94,18 +94,28 @@ private void getAlltransaction() {
 			for(transaction transaction:ReportBL.gettransaction()) {
 				System.out.println(transaction);
 			}
+			keepGoing = false;
+			break;
 		//manager gets records for a single employee
 		case "2":
-			GetEmpRecords();// error printed out too many people
+			GetEmpRecords();
+			keepGoing = false;
+			break;
 		//manager gets all approved records
 		case "3":
 			GetAllOfState(Integer.parseInt(Mchoice));
+			keepGoing = false;
+			break;
 		//manager gets all denied records
 		case "4":
 			GetAllOfState(Integer.parseInt(Mchoice));
+			keepGoing = false;
+			break;
 		//manager gets all pending records
 		case "5":
 			GetAllOfState(Integer.parseInt(Mchoice));
+			keepGoing = false;
+			break;
 		// there are 2 loops the manager loop and the general function loop so both have default and exit statments at the end
 		case "x":
 			keepGoing = false;
@@ -123,21 +133,6 @@ private void getAlltransaction() {
 		PickRealOption();
 		break;
 	}}while(keepGoing);
-	
-	
-	//employee leads to 1
-	
-	//manager  leads to 1-5
-	
-	//1 list all with specific employee id
-	
-	//2 warning only manager list all
-	
-	//3 warning only manager list all approved
-	
-	//4 warning only manager list all denied
-	
-	//5 warning only manager list all pending
 	}
 
 //creates a transaction from given info and uploads it to memory repo
@@ -282,7 +277,7 @@ private void GetAllOfState(int choice) {
 		if(transaction.getState() == helper.getState()) {
 			System.out.println(transaction);
 	}}
-	myScanner.nextLine();//this is the clear it for returning to method
+	//this is the clear it for returning to method
 }
 //takes person through a loop to get a accurate id number with 0 being the dummny number if they exit early
 private int userIntAnswer() {
