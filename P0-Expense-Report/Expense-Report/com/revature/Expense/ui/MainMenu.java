@@ -349,6 +349,7 @@ private void MainAllTransactionMenu() {
 
 //creats a bunch of transactions so i dont have to manually enter for testing
 private void LoadTestingData() {
+	//yes i should just use a for loop or a while loop thanks for pointing it out
 	int user = 0;
 	double am = 0;
 	String date = "";
