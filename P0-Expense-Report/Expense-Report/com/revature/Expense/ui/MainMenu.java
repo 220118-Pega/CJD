@@ -67,7 +67,7 @@ public void start() {
 			else{PickRealOption();}
 			break;
 		//manager can add employee under them
-		case "5":
+		case "5":// i am stopping now reread instructions i was starting to go mad with making a complete product but that is not my job only make what was asked
 			if(currentUser.isManager()) {
 			CreateUser(currentUser);
 			}
