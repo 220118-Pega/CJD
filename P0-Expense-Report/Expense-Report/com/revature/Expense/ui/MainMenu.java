@@ -32,13 +32,16 @@ public void start() {
 		System.out.println("you are not a athourized user goodbye");
 		keepGoing = false;
 	}
-	else {
 	//gets the user item outside of the loops so only recorded once
 	userInfo currentUser = ReportBL.getUserById(accessLevel);
 	// if not a manager then you are a employee and can make reimpertment requests and view your old ones
-	if(currentUser.isManager() == false){
-		do {
-		MainEmployeeMenu();
+	//if you are a manager you have the full range of options
+	do {
+		if(currentUser.isManager()){
+			MainManagerTextMenu();}
+		else {
+			MainEmployeeMenu();
+		}
 		String userInput = myScanner.nextLine();
 		switch(userInput) {
 		case "1":
@@ -49,6 +52,14 @@ public void start() {
 			System.out.println("Welcome to your Records");
 			getAlltransaction(currentUser);
 			break;
+		case "3":
+			if(currentUser.isManager()){
+			Approvetransaction(currentUser);}
+			break;
+		case "4":
+			if(currentUser.isManager()){
+			Denytransaction(currentUser);}
+			break;
 		case "x":
 			GoodBye();
 			keepGoing = false;
@@ -58,38 +69,7 @@ public void start() {
 			break;
 		}
 		}while(keepGoing);
-		}
-	//if you are a manager you have the full range of options
-	else {
-		do {
-			MainManagerTextMenu();
-			String userInput = myScanner.nextLine();
-			switch(userInput) {
-			case "1":
-				System.out.println("Filing your report");
-				createtransaction(currentUser);
-				break;
-			case "2":
-				System.out.println("Welcome to Records");
-				getAlltransaction(currentUser);
-				break;
-			case "3":
-				Approvetransaction(currentUser);
-				break;
-			case "4":
-				Denytransaction(currentUser);
-				break;
-			case "x":
-				GoodBye();
-				keepGoing = false;
-				break;
-			default:
-				PickRealOption();
-				break;
-			}
-			
-		}while(keepGoing);
-}}}
+}}
 
 //approves a transaction
 private void Approvetransaction(userInfo currentUser) {
