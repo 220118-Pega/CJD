@@ -44,22 +44,34 @@ public void start() {
 		}
 		String userInput = myScanner.nextLine();
 		switch(userInput) {
+		//file out a new transaction
 		case "1":
 			System.out.println("Filing your report");
 			createtransaction(currentUser);
 			break;
+		//access records a employee can get their own a manager can access anyone's
 		case "2":
 			System.out.println("Welcome to your Records");
 			getAlltransaction(currentUser);
 			break;
+		//manager can approve a transaction
 		case "3":
 			if(currentUser.isManager()){
 			Approvetransaction(currentUser);}
+			else{PickRealOption();}
 			break;
+		//manager can deny a transaction
 		case "4":
 			if(currentUser.isManager()){
 			Denytransaction(currentUser);}
+			else{PickRealOption();}
 			break;
+		//manager can add employee under them
+		case "5":
+			if(currentUser.isManager()) {
+			CreateUser(currentUser);
+			}
+			else {PickRealOption();}
 		case "x":
 			GoodBye();
 			keepGoing = false;
@@ -71,6 +83,18 @@ public void start() {
 		}while(keepGoing);
 }
 
+//creates a new employee and adds them
+private void CreateUser(userInfo currrentUser) {
+	System.out.println("Please enter new employee's name");
+	QuitText();
+	String name = myScanner.nextLine();
+	if(name.equals("x")) {
+		GoodBye();
+	}
+	userInfo newperson = new userInfo(name, currrentUser.getManagerid());
+	ReportBL.addemployee(newperson);
+	System.out.println(name + " has been added as a employee with you as their manager");
+}
 //approves a transaction
 private void Approvetransaction(userInfo currentUser) {
 	// if given incorect id num then a dummy is changed need to give warning
@@ -165,7 +189,7 @@ private void createtransaction(userInfo currentUser) {
 	//getting all variable info from employee
 	//do while loop to get a accurate tran amout
 	System.out.println("Please enter transaction amount: ");
-	System.out.println("or enter x to quit: ");
+	QuitText();;
 	while(keepGoing) {
 		if (myScanner.hasNextDouble()){
 				transactionamount = myScanner.nextDouble();
@@ -178,7 +202,7 @@ private void createtransaction(userInfo currentUser) {
 			}
 			else {
 				System.out.println("invaild number please enter vaild amount: ");
-				System.out.println("or enter x to quit:");}
+				QuitText();}
 		}}
 	if(transactionamount == 0) {
 		GoodBye();
@@ -188,14 +212,14 @@ private void createtransaction(userInfo currentUser) {
 	myScanner.nextLine();
 	//they can do anything to date need to make them enter a date format
 	System.out.println("Please enter date of transaction: ");
-	System.out.println("or enter x to quit:");
+	QuitText();
 	String date = myScanner.nextLine();
 	if(date.equals("x")) {
 		GoodBye();
 	}else {
 	//they can say anything for descrption no need to control it
 	System.out.println("Please enter a descrption of the transaction: ");
-	System.out.println("or enter x to quit:");
+	QuitText();
 	String descrption = myScanner.nextLine();
 	if(descrption.equals("x")) {
 		GoodBye();
@@ -248,8 +272,7 @@ private void createtransaction(userInfo currentUser) {
 
 
 //contains the simplifications to above code by taking repeating code and turning those to a method
-//the similar process of approve and deny
-
+//the similar process of approve and deny turns out thats the process to get one record
 private transaction Singletransaction(userInfo currentUser) {
 	int tranid = 0;
 	System.out.println("Enter the id of the transaction: ");
@@ -324,7 +347,7 @@ private int userIntAnswer() {
 				}
 				else {
 					System.out.println("invaild id please enter vaild id: ");
-					System.out.println("or enter x to quit:");}
+					QuitText();}
 	}}
 	return id;
 }
@@ -343,14 +366,13 @@ private void MainManagerTextMenu() {
 	System.out.println("[2] Records of requests");
 	System.out.println("[3] Approve request");
 	System.out.println("[4] Deny request");
-	System.out.println("[x] Exit");
-	System.out.println("[t] Testbatch");//comment out after testing
+	QuitText();
 }
 private void MainEmployeeMenu() {
 	System.out.println("Welcome to expense reports");
 	System.out.println("[1] Create a reinburstment request");
 	System.out.println("[2] Records of requests");
-	System.out.println("[x] Exit");
+	QuitText();
 }
 private void MainTypeMenu() {
 	System.out.println("please enter type of transaction");
@@ -358,7 +380,7 @@ private void MainTypeMenu() {
 	System.out.println("[2] Travel");
 	System.out.println("[3] Food");
 	System.out.println("[4] Other");
-	System.out.println("[x] to quit");
+	QuitText();
 }
 private void MainRecordsManagerMenu() {
 	System.out.println("[1] list all records");
@@ -367,7 +389,7 @@ private void MainRecordsManagerMenu() {
 	System.out.println("[4] list all denied records");
 	System.out.println("[5] list all pending records");
 	System.out.println("[6] list 1 employee's records");
-	System.out.println("[x] Quit");
+	QuitText();
 }
 private void MainRecordsEmployeeMenu() {
 	System.out.println("[1] list all your records");
@@ -375,13 +397,15 @@ private void MainRecordsEmployeeMenu() {
 	System.out.println("[3] list all your approved records");
 	System.out.println("[4] list all your denied records");
 	System.out.println("[5] list all your pending records");
-	System.out.println("[x] Quit");
+	QuitText();
 }
 private void EmployeeIdRequest() {
 	System.out.println("Please enter a employee id");
-	System.out.println("or press x to exit: ");
+	QuitText();
 }
-
+private void QuitText() {
+	System.out.println("or enter x to quit:");
+}
 
 //creats a bunch of transactions so i dont have to manually enter for testing
 private void LoadTestingData() {
