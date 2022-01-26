@@ -69,7 +69,7 @@ public void start() {
 			break;
 		}
 		}while(keepGoing);
-}}
+}
 
 //approves a transaction
 private void Approvetransaction(userInfo currentUser) {
