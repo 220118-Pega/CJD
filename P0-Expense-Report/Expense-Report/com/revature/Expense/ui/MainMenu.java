@@ -3,6 +3,7 @@ package com.revature.Expense.ui;
 import java.util.Scanner;
 import com.revature.Expense.bl.ReportBL;
 import com.revature.Expense.models.transaction;
+import com.revature.Expense.models.userInfo;
 
 public class MainMenu {
 	private Scanner myScanner;
@@ -13,54 +14,96 @@ public class MainMenu {
 	}
 	
 public void start() {
+	//sets up the employee database
+	ReportBL.IntializeEmployees();
+	//sets up preexisting trasaction data
+	LoadTestingData();
+	
+	//set up inital variables
 	boolean keepGoing = true;
-	do {
-		MainTextMenu();
-		
+	int accessLevel = 0;
+	
+	//gets the id of user
+	EmployeeIdRequest();
+	accessLevel = userIntAnswer();
+	myScanner.nextLine();
+	//if dummy id is returned quits as they aren't a user or quit
+	if (accessLevel == 0) {
+		System.out.println("you are not a athourized user goodbye");
+		keepGoing = false;
+	}
+	else {
+	//gets the user item outside of the loops so only recorded once
+	userInfo currentUser = ReportBL.getUserById(accessLevel);
+	// if not a manager then you are a employee and can make reimpertment requests and view your old ones
+	if(currentUser.isManager() == false){
+		do {
+		MainEmployeeMenu();
 		String userInput = myScanner.nextLine();
 		switch(userInput) {
 		case "1":
 			System.out.println("Filing your report");
-			createtransaction();
+			createtransaction(currentUser);
 			break;
 		case "2":
-			System.out.println("Welcome to Records");
-			getAlltransaction();
-			break;
-		case "3":
-			Approvetransaction();
-			break;
-		case "4":
-			Denytransaction();
+			System.out.println("Welcome to your Records");
+			getAlltransaction(currentUser);
 			break;
 		case "x":
 			GoodBye();
 			keepGoing = false;
 			break;
-		case "t"://commet out after testing
-			LoadTestingData();
-			break;
 		default:
 			PickRealOption();
 			break;
 		}
-		
-	}while(keepGoing);
-}
+		}while(keepGoing);
+		}
+	//if you are a manager you have the full range of options
+	else {
+		do {
+			MainManagerTextMenu();
+			String userInput = myScanner.nextLine();
+			switch(userInput) {
+			case "1":
+				System.out.println("Filing your report");
+				createtransaction(currentUser);
+				break;
+			case "2":
+				System.out.println("Welcome to Records");
+				getAlltransaction(currentUser);
+				break;
+			case "3":
+				Approvetransaction(currentUser);
+				break;
+			case "4":
+				Denytransaction(currentUser);
+				break;
+			case "x":
+				GoodBye();
+				keepGoing = false;
+				break;
+			default:
+				PickRealOption();
+				break;
+			}
+			
+		}while(keepGoing);
+}}}
 
 //approves a transaction
-private void Approvetransaction() {
+private void Approvetransaction(userInfo currentUser) {
 	// if given incorect id num then a dummy is changed need to give warning
-	transaction updatetran = Pendingtransaction();
+	transaction updatetran = Singletransaction(currentUser);
 	if(confirm(updatetran)) {
 		updatetran.Approve();
 		System.out.println("Approved");}
 	myScanner.nextLine();
 	}
 //denys a transaction
-private void Denytransaction() {
+private void Denytransaction(userInfo currentUser) {
 	// if given incorect id num then a dummy is changed need to give warning
-	transaction updatetran = Pendingtransaction();
+	transaction updatetran = Singletransaction(currentUser);
 	if(confirm(updatetran)) {
 		updatetran.Deny();
 		System.out.println("Denied");
@@ -68,92 +111,78 @@ private void Denytransaction() {
 	myScanner.nextLine();
 }
 //is the menu to retrive records from memory repo has options for employees and managers currently trusts people to tell the truth
-private void getAlltransaction() {
+private void getAlltransaction(userInfo currentUser) {
 	//variables for program
 	Boolean keepGoing = true;
-	String Mchoice = "";
+	String choice = "";
+	boolean manager = currentUser.isManager();
 	
 	//employee or manager
-	do {
-	MainAllTransactionMenu();
-	String authority = myScanner.nextLine();
-	
-	switch(authority) {
 	//if employee they only can access their own records
-	case "1":
-		GetEmpRecords();// needed double x to get out investagate
-		keepGoing = false;
-		break;
-	//if manager they have access to manager menu
-	//a manager isnt auto moved out of this screen they need to push x to leave
-	case "2":
-		do {
-		MainManagerMenu();
-		Mchoice = myScanner.nextLine();
-		switch(Mchoice) {
-		//manager prints all transactions
-		case "1"://entering 1 may have it default to employee section
-			for(transaction transaction:ReportBL.gettransaction()) {
-				System.out.println(transaction);
-			}
-			keepGoing = false;
-			break;
-		//manager gets records for a single employee
-		case "2":
-			GetEmpRecords();
-			keepGoing = false;
-			break;
-		//manager gets all approved records
-		case "3":
-			GetAllOfState(Integer.parseInt(Mchoice));
-			keepGoing = false;
-			break;
-		//manager gets all denied records
-		case "4":
-			GetAllOfState(Integer.parseInt(Mchoice));
-			keepGoing = false;
-			break;
-		//manager gets all pending records
-		case "5":
-			GetAllOfState(Integer.parseInt(Mchoice));
-			keepGoing = false;
-			break;
-		// there are 2 loops the manager loop and the general function loop so both have default and exit statments at the end
-		case "x":
-			keepGoing = false;
-			break;
-		default:
-			PickRealOption();
-			break;
-			
+	do {
+		if(manager) {
+			MainRecordsManagerMenu();
+		}
+		else {
+			MainRecordsEmployeeMenu();
+		}
+		choice = myScanner.nextLine();
+		switch(choice) {
+			//prints all of employee's transactions or prints all of everyone's transactions if manager
+			case "1":
+				if(manager) {
+				for(transaction transaction:ReportBL.gettransaction()) {
+					System.out.println(transaction);
+				}}
+				else {
+				GetEmpRecords(currentUser.getEmployid());
+				}
+				keepGoing = false;
+				break;
+			//single transaction by its transaction id can be used by employee's and managers but manger can get any transaction
+			case "2":
+				Singletransaction(currentUser);
+				keepGoing = false;
+				break;
+			//gets all employee's approved records or prints everyone's if manager
+			case "3":
+				GetAllOfState(Integer.parseInt(choice), currentUser);
+				keepGoing = false;
+				break;
+			//gets all employee's denied records or prints everyone's if manager
+			case "4":
+				GetAllOfState(Integer.parseInt(choice), currentUser);
+				keepGoing = false;
+				break;
+			//gets all  employee's pending records or prints everyone's if manager
+			case "5":
+				GetAllOfState(Integer.parseInt(choice), currentUser);
+				keepGoing = false;
+				break;
+			case "6":
+				if(manager) {
+					EmployeeIdRequest();
+					int userid = userIntAnswer();
+					GetEmpRecords(userid);}
+			case "x":
+				keepGoing = false;
+				break;
+			default:
+				PickRealOption();
+				break;
 		}}while(keepGoing);
-	case "x":
-		GoodBye();
-		keepGoing = false;
-		break;
-	default:
-		PickRealOption();
-		break;
-	}}while(keepGoing);
-	}
+		}
+
 
 //creates a transaction from given info and uploads it to memory repo
 //takes someone through proccess to create a transaction and upload to memory repo
-private void createtransaction() {
+private void createtransaction(userInfo currentUser) {
 	boolean keepGoing = true;
 	//all the variables
-	int userid = 0;
+	int userid = currentUser.getEmployid();
 	double transactionamount = 0;
 	int quit = 0;// so quiting from transaction type is easy
 	//getting all variable info from employee
-	//a do while loop to get an accurate emp id
-	EmployeeIdRequest();
-	userid = userIntAnswer();
-	if (userid == 0) {
-		GoodBye();
-	}
-	else {
-	
 	//do while loop to get a accurate tran amout
 	System.out.println("Please enter transaction amount: ");
 	System.out.println("or enter x to quit: ");
@@ -235,17 +264,30 @@ private void createtransaction() {
 	System.out.println(newReport);
 	System.out.println("");
 	
-}}}}}}
+}}}}}
 
 
 //contains the simplifications to above code by taking repeating code and turning those to a method
 //the similar process of approve and deny
-private transaction Pendingtransaction() {
+
+private transaction Singletransaction(userInfo currentUser) {
 	int tranid = 0;
 	System.out.println("Enter the id of the transaction: ");
 	tranid = userIntAnswer();
 	transaction updatetran = ReportBL.gettransactionByTranId(tranid);
-	return updatetran;//geting double main menu probably just need to add scanner to clear it
+	if(currentUser.isManager()) {
+		return updatetran;
+	}
+	else {
+		if(updatetran.getUserid() == currentUser.getEmployid()) {
+			return updatetran;
+		}
+		else {
+			transaction noAccess = new transaction(0,0,"zero","zero");
+			System.out.println("you did not have access to that transaction");
+			return noAccess;
+		}
+	}
 }
 //confirms that the transaction is a real transaction and not the dummy transaction
 private boolean confirm(transaction updatetran) {
@@ -260,9 +302,7 @@ private boolean confirm(transaction updatetran) {
 }
 //prints all employee transactions
 //common tasks method out for ease of code
-private void GetEmpRecords() {
-	EmployeeIdRequest();
-	int userid = userIntAnswer();
+private void GetEmpRecords(int userid) {
 	for(transaction user:ReportBL.gettransactionByUserId(userid)) {
 		if(user.getUserid() == userid) {
 			System.out.println(user);
@@ -270,17 +310,22 @@ private void GetEmpRecords() {
 	myScanner.nextLine();//this is to clear the line so things arent left for future checks
 }
 //prints all transactions of a type decided by number manager entered
-private void GetAllOfState(int choice) {
+private void GetAllOfState(int choice,userInfo currentUser) {
 	transaction helper = new transaction(0,1.0,"zero","zero");
 	if (choice == 3) {helper.Approve();}
 	if (choice == 4) {helper.Deny();}
 	if (choice == 5) {helper.Pending();}
+	if(currentUser.isManager()) {
 	for(transaction transaction:ReportBL.gettransaction()) {
 		if(transaction.getState() == helper.getState()) {
-			System.out.println(transaction);
-	}}
+			if(currentUser.isManager()) {
+				System.out.println(transaction);}
+			else {
+				if(transaction.getUserid() == currentUser.getEmployid()) {
+					System.out.println(transaction);}	
+		}}
+	}}}
 	//this is the clear it for returning to method
-}
 //takes person through a loop to get a accurate id number with 0 being the dummny number if they exit early
 private int userIntAnswer() {
 	int id = 0;
@@ -305,14 +350,14 @@ private int userIntAnswer() {
 }
 //holding text blocks for ease of editing
 
-//these are all just strings that were repeated so put them down here to make code above better
+//these are all just strings that were repeated or long so put them down here to make code above pretty
 private void PickRealOption() {
 	System.out.println("Please only put listed options");
 }
 private void GoodBye() {
 	System.out.println("Good Bye \n");
 }
-private void MainTextMenu() {
+private void MainManagerTextMenu() {
 	System.out.println("Welcome to expense reports");
 	System.out.println("[1] Create a reinburstment request");
 	System.out.println("[2] Records of requests");
@@ -320,6 +365,12 @@ private void MainTextMenu() {
 	System.out.println("[4] Deny request");
 	System.out.println("[x] Exit");
 	System.out.println("[t] Testbatch");//comment out after testing
+}
+private void MainEmployeeMenu() {
+	System.out.println("Welcome to expense reports");
+	System.out.println("[1] Create a reinburstment request");
+	System.out.println("[2] Records of requests");
+	System.out.println("[x] Exit");
 }
 private void MainTypeMenu() {
 	System.out.println("please enter type of transaction");
@@ -329,23 +380,28 @@ private void MainTypeMenu() {
 	System.out.println("[4] Other");
 	System.out.println("[x] to quit");
 }
-private void MainManagerMenu() {
+private void MainRecordsManagerMenu() {
 	System.out.println("[1] list all records");
-	System.out.println("[2] list 1 employee's records");
+	System.out.println("[2] list 1 transaction");
 	System.out.println("[3] list all approved records");
 	System.out.println("[4] list all denied records");
 	System.out.println("[5] list all pending records");
+	System.out.println("[6] list 1 employee's records");
+	System.out.println("[x] Quit");
+}
+private void MainRecordsEmployeeMenu() {
+	System.out.println("[1] list all your records");
+	System.out.println("[2] list 1 transaction");
+	System.out.println("[3] list all your approved records");
+	System.out.println("[4] list all your denied records");
+	System.out.println("[5] list all your pending records");
 	System.out.println("[x] Quit");
 }
 private void EmployeeIdRequest() {
 	System.out.println("Please enter a employee id");
 	System.out.println("or press x to exit: ");
 }
-private void MainAllTransactionMenu() {
-	System.out.println("[1] i am employee");
-	System.out.println("[2] i am manager");
-	System.out.println("[x] Quit");
-}
+
 
 //creats a bunch of transactions so i dont have to manually enter for testing
 private void LoadTestingData() {

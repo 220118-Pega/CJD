@@ -33,6 +33,13 @@ public class userInfo {
 		Managerid = managerid;
 	}
 	//constructor
+	
+	public userInfo(String Name, int Mid) {
+		this.employid = 0;
+		this.Name = Name;
+		this.isManager = false;
+		this.Managerid = Mid;
+	}
 	public userInfo(int empid, String Name,  boolean isM, int Mid) {
 		this.employid = empid;
 		this.Name = Name;

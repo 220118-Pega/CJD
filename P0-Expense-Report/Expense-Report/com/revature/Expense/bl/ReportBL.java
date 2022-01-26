@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.revature.Expense.dl.IRepo;
 import com.revature.Expense.models.transaction;
+import com.revature.Expense.models.userInfo;
 
 /**
  * is the midway point for menu and repo to serve as busiuss logic point
@@ -31,6 +32,13 @@ public class ReportBL implements RReportBL{
 	}
 	public List<transaction> gettransactionByUserId(int id) {
 		return repo.gettransactionByUserId(id);
+	}
+	public void addemployee(userInfo newuser) {
+		repo.addemployee(newuser);
+		
+	}
+	public userInfo getUserById(int id) {
+		return repo.getUserById(id);
 	}
 }
 
