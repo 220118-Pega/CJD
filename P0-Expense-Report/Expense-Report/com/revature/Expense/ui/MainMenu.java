@@ -106,7 +106,7 @@ private void Approvetransaction(userInfo currentUser) {
 	}
 //denys a transaction
 private void Denytransaction(userInfo currentUser) {
-	// if given incorect id num then a dummy is changed need to give warning
+	// if given incorect id num then a dummy is changed
 	transaction updatetran = Singletransaction(currentUser);
 	if(confirm(updatetran)) {
 		updatetran.Deny();
@@ -143,9 +143,10 @@ private void getAlltransaction(userInfo currentUser) {
 				}
 				keepGoing = false;
 				break;
-			//single transaction by its transaction id can be used by employee's and managers but manger can get any transaction
+			//single transaction by its transaction id can be used by employee's and managers but manger can get any transaction prints it out
 			case "2":
-				Singletransaction(currentUser);
+				transaction indivual = Singletransaction(currentUser);
+				System.out.println(indivual);
 				keepGoing = false;
 				break;
 			//gets all employee's approved records or prints everyone's if manager
@@ -279,6 +280,7 @@ private transaction Singletransaction(userInfo currentUser) {
 	tranid = userIntAnswer();
 	transaction updatetran = ReportBL.gettransactionByTranId(tranid);
 	if(currentUser.isManager()) {
+		confirm(updatetran);
 		return updatetran;
 	}
 	else {
@@ -312,7 +314,7 @@ private void GetEmpRecords(int userid) {
 			}}
 	myScanner.nextLine();//this is to clear the line so things arent left for future checks
 }
-//prints all transactions of a type decided by number manager entered
+//prints all transactions of a type manager can print all a employee can only print their own
 private void GetAllOfState(int choice,userInfo currentUser) {
 	transaction helper = new transaction(0,1.0,"zero","zero");
 	if (choice == 3) {helper.Approve();}
@@ -328,7 +330,6 @@ private void GetAllOfState(int choice,userInfo currentUser) {
 					System.out.println(transaction);}	
 		}}
 	}}}
-	//this is the clear it for returning to method
 //takes person through a loop to get a accurate id number with 0 being the dummny number if they exit early
 private int userIntAnswer() {
 	int id = 0;
