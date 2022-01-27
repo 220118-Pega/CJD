@@ -1,14 +1,18 @@
 package com.revature.Expense.dl;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
+
 
 public class ConnectionFactory {
 	// eager loading - you create the instance of connection factory as soon as
 	private static ConnectionFactory connectionFactory = new ConnectionFactory();
 	// hold the db config stuff
 	private Properties prop = new Properties();
-	
+	private final Logger logger =LogManager.getLogger(this.getClass());
 	// force load postgresql driver
 	//static members of the class get loaded into memoery at the start of program run time
 	// static blocks get run at the start
@@ -37,4 +41,19 @@ public class ConnectionFactory {
 		//if connection factory == null connecctionfactory = new connection factory
 		return connectionFactory;
 	}
+	public Connection getConnection() {
+		Connection conn = null;
+		// trying to get connection using db creds
+		try {
+			conn = DriverManager.getConnection(prop.getProperty("url"),
+												prop.getProperty("username"),
+												prop.getProperty("password"));
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return conn;
+	}
 }
+
+
