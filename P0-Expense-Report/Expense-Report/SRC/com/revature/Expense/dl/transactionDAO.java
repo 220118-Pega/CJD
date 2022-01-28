@@ -12,6 +12,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.revature.Expense.models.transaction;
 /**
  * @author 16del
@@ -19,22 +22,25 @@ import com.revature.Expense.models.transaction;
  */
 public class transactionDAO implements DAO<transaction, Integer> {
 	private final Logger logger = LogManager.getLogger(this.getClass());
+	
 	@Override
-	public transaction findById(Integer id) {
+	public transaction findByTId(Integer Tid) {
 		//try with resources block after the try block finishes excuting
 		//disposes of the resources for you
-		try(Connection conn = ConnectionFactory.getInstance().getConnection());{
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			// ? is a placeholder for a parameter we'll be sending our DB
-			String query = "select * from issues where id = ?";
+			String query = "select * from issues where transactionid = ?";
 			PreparedStatement pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, id);
+			pstmt.setInt(1, Tid);
 			//excutequery used for executing select commands
 			//result set holds the results from the db
 			ResultSet rs = pstmt.executeQuery();
 			//we need to unpack the results to return something to end user
 			if(rs.next()) {
-				return new public transaction(rs.getInt("userid"), rs.getDouble("transactionamount"), rs.getString("date"), rs.getString("description"));//probably double check names
-				
+				return new transaction(rs.getInt("userid"), 
+						rs.getDouble("transactionamount"), 
+						rs.getString("date"), 
+						rs.getString("description"));
 			}
 			
 		}catch (SQLException e) {
@@ -45,7 +51,7 @@ public class transactionDAO implements DAO<transaction, Integer> {
 	}
 
 	@Override
-	public Iterable<transaction> findAll() {
+	public List<transaction> findAll() {
 		List<transaction> trans = new ArrayList<transaction>();
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			String query = "select * from transactions";
@@ -55,18 +61,30 @@ public class transactionDAO implements DAO<transaction, Integer> {
 				trans.add(new transaction(rs.getInt("userid"), 
 						rs.getDouble("transactionamount"), 
 						rs.getString("date"), 
-						rs.getString("description")))
+						rs.getString("description")));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
 			logger.error("Someting went wrong in findAll",e);
 		}
-		return null;
+		return trans;
 	}
 
 	@Override
 	public void add(transaction newObject) {
-		// TODO Auto-generated method stub
+		try(Connection conn = ConnectionFactory.getInstance().getConnection())
+				{
+					String query = "insert into transaction (userid, transactionamount, date, descritpion) values (?, ?, ?, ?);";
+					PreparedStatement pstmt = conn.prepareStatement(query);
+					pstmt.setInt(1, newObject.getUserid());
+					pstmt.setDouble(2, newObject.getTransactionamount());
+					pstmt.setString(3, newObject.getDate());
+					pstmt.setString(4, newObject.getDescritpion());
+					pstmt.execute();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					logger.error("trouble adding", e);
+				}
 		
 	}
 
@@ -74,6 +92,27 @@ public class transactionDAO implements DAO<transaction, Integer> {
 	public void update(transaction newOject) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public transaction findByUid(Integer Uid) {
+		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
+			String query = "select * from issues where userid = ?";
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, Uid);
+			ResultSet rs = pstmt.executeQuery();
+		if(rs.next()) {
+			return new transaction(rs.getInt("userid"), 
+					rs.getDouble("transactionamount"), 
+					rs.getString("date"), 
+					rs.getString("description"));
+		}
+		
+	}catch (SQLException e) {
+		e.printStackTrace();
+		logger.error("Error with connecting to the DB");
+	}
+	return null;
 	}
 
 }

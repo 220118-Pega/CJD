@@ -8,7 +8,7 @@ import com.revature.Expense.models.userInfo;
 public interface RReportBL {
 	
 	void addtransaction(transaction tran);
-	public void IntializeEmployees();
+	//public void IntializeEmployees();
 	public void addemployee(userInfo newuser);
 	public userInfo getUserById(int id);
 	List<transaction> gettransaction();

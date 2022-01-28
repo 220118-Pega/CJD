@@ -7,7 +7,7 @@ import com.revature.Expense.models.userInfo;
 
 public interface IRepo {
 	public void addtransaction(transaction newtran);
-	public void IntializeEmployees();
+	//public void IntializeEmployees();
 	List<transaction> gettransaction();
 	transaction gettransactionByTranId(int id);
 	List<transaction> gettransactionByUserId(int id);
