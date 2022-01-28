@@ -29,7 +29,7 @@ public class transactionDAO implements DAO<transaction, Integer> {
 		//disposes of the resources for you
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			// ? is a placeholder for a parameter we'll be sending our DB
-			String query = "select * from issues where transactionid = ?";
+			String query = "select * from transactions where transactionid = ?";
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, Tid);
 			//excutequery used for executing select commands

@@ -31,7 +31,7 @@ public class userInfoDAO implements DAO<userInfo, Integer> {
 	@Override
 	public userInfo findByUid(Integer employeeid) {
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()){
-			String query = "select * from solutions where employeeid = ?";
+			String query = "select * from userInfo where employeeid = ?";
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, employeeid);
 			ResultSet rs = pstmt.executeQuery();

@@ -16,6 +16,7 @@ public class ConnectionFactory {
 	// hold the db config stuff
 	private Properties prop = new Properties();
 	private final Logger logger = LogManager.getLogger(this.getClass());
+	
 	// force load postgresql driver
 	//static members of the class get loaded into memoery at the start of program run time
 	// static blocks get run at the start
@@ -32,7 +33,7 @@ public class ConnectionFactory {
 		//loading properties files that contain db config
 		try {
 			ClassLoader loader = Thread.currentThread().getContextClassLoader();
-			prop.load(loader.getResourceAsStream("Expense-Report/SRC/resources/db.properties"));
+			prop.load(loader.getResourceAsStream("db.properties"));
 		}catch(IOException e) {
 			e.printStackTrace();
 			logger.error("Can't find db.props file", e);
