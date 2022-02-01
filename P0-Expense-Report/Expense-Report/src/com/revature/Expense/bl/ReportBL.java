@@ -40,6 +40,9 @@ public class ReportBL implements RReportBL{
 	public userInfo getUserById(int id) {
 		return repo.getUserById(id);
 	}
-
+	public List<userInfo> getAllUsers(){
+		return repo.getAllUsers();
+		
+	}
 }
 

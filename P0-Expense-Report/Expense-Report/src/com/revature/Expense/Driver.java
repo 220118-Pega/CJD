@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import com.revature.Expense.bl.ReportBL;
 import com.revature.Expense.dl.DBRepository;
-import com.revature.Expense.dl.RepoMemory;
 import com.revature.Expense.dl.transactionDAO;
 import com.revature.Expense.dl.userInfoDAO;
 import com.revature.Expense.ui.MainMenu;

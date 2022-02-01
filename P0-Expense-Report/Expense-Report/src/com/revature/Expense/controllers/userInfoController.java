@@ -22,7 +22,9 @@ public class userInfoController implements IController {
 	@Override
 	public Handler getAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return ctx -> {
+			ctx.jsonStream(reportBL.getAllUsers());
+		};
 	}
 
 	@Override
@@ -45,8 +47,15 @@ public class userInfoController implements IController {
 
 	@Override
 	public Handler getByUId() {
-		// TODO Auto-generated method stub
-		return null;
+		return ctx -> {
+			String id = ctx.pathParam("employid");
+			int actualid = Integer.parseInt(id);
+			try {
+				ctx.jsonStream(reportBL.getUserById(actualid));
+			}catch(NullPointerException ex) {
+				ctx.status(204);
+			}
+		};
 	}
 	
 }

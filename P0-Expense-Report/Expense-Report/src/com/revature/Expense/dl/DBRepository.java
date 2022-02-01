@@ -27,13 +27,7 @@ public class DBRepository implements IRepo {
 		tranDAO.add(newtran);
 		
 	}
-/* was a testing method with database no longer needed
-	@Override//this was testing until data base came can delte once database is connected
-	public void IntializeEmployees() {
-		// TODO Auto-generated method stub
-		
-	}
-*/
+
 	@Override
 	public List<transaction> gettransaction() {
 		return tranDAO.findAll();
@@ -77,6 +71,11 @@ public class DBRepository implements IRepo {
 	public userInfo getUserById(int id) {
 		userInfo wanteduser = userDAO.findByUid(id);
 		return wanteduser;
+	}
+
+	@Override
+	public List<userInfo> getAllUsers() {
+		return userDAO.findAll();
 	}
 
 }

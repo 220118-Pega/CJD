@@ -2,10 +2,10 @@ package com.revature.Expense.dl;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+*/
 import com.revature.Expense.models.transaction;
 import com.revature.Expense.models.userInfo;
 
@@ -17,10 +17,10 @@ import com.revature.Expense.models.userInfo;
 public class RepoMemory implements IRepo {
 	private static List<transaction> reportoftran;
 	private static List<userInfo> Listofemp;
-	private Logger logger = LogManager.getLogger(this.getClass());
+	//private Logger logger = LogManager.getLogger(this.getClass());
 	private static int LatesttranId = 1;
 	private static int LatestempId = 1;// to keep employee id accurrate in memory to prevent double id's
-	private static int LatestMId = 1;// to keep manager id accurrate so double id's don't happen wont do anything if manger is moved to god and the number will just be lost
+	//private static int LatestMId = 1; now a matter for database// to keep manager id accurrate so double id's don't happen wont do anything if manger is moved to god and the number will just be lost
 	//see how latest Mid and latest empId work without doing it myself
 public RepoMemory() {
 		reportoftran = new ArrayList<transaction>();
@@ -93,5 +93,10 @@ public List<transaction> gettransactionByUserId(int id) {
 		UserReports.add(dummytran);
 	}
 	return UserReports;
+}
+
+@Override
+public List<userInfo> getAllUsers() {
+	return RepoMemory.Listofemp;
 }
 }

@@ -10,13 +10,11 @@ import com.revature.Expense.controllers.userInfoController;
 import com.revature.Expense.dl.DBRepository;
 import com.revature.Expense.dl.transactionDAO;
 import com.revature.Expense.dl.userInfoDAO;
-import com.revature.Expense.utils.DocumentationFacotry;
 import com.revature.Expense.utils.Router;
 
 import io.javalin.Javalin;
 import io.javalin.plugin.openapi.OpenApiOptions;
 import io.javalin.plugin.openapi.OpenApiPlugin;
-import io.javalin.plugin.openapi.dsl.OpenApiBuilder;
 import io.javalin.plugin.openapi.ui.SwaggerOptions;
 import io.swagger.v3.oas.models.info.Info;
 /**
@@ -38,9 +36,9 @@ public class RESTDriver {
 	}
 		private static OpenApiOptions getOpenApiOptions() {
 			//configuring swagger
-			Info applicationInfo = new Info().version("1.0").description("Expense REST");//Stacklite REST change into my path
+			Info applicationInfo = new Info().version("1.0").description("Expense REST");
 			return new OpenApiOptions(applicationInfo).path("/swagger-docs")
 					.swagger(new SwaggerOptions("/swagger")
-							.title("Expense API Docs"));//change into my path
+							.title("Expense API Docs"));
 		}
 }

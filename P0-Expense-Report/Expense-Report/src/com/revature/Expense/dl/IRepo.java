@@ -13,4 +13,5 @@ public interface IRepo {
 	List<transaction> gettransactionByUserId(int id);
 	void addemployee(userInfo newuser);
 	public userInfo getUserById(int id);
+	public List<userInfo> getAllUsers();
 }

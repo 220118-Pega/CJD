@@ -26,10 +26,10 @@ public class Router {
 	}
 	public void setUpEndPoints() {
 		app.get("/Transactions",OpenApiBuilder.documented(DocumentationFacotry.getDoc("getTransaction"),transactionController.getAll()));
-		app.get("/Transaction/{transactionid}", OpenApiBuilder.documented(DocumentationFacotry.getDoc("getTransactionId"), transactionController.getByTId()));
+		app.get("/Transaction/{transactionid}", OpenApiBuilder.documented(DocumentationFacotry.getDoc("getTransactionById"), transactionController.getByTId()));
 		app.post("/Transactions", OpenApiBuilder.documented(DocumentationFacotry.getDoc("addTransaction"), transactionController.add()));
-		app.get("/UserInfo/{userInfoid}", OpenApiBuilder.documented(DocumentationFacotry.getDoc("addUser"), userInfoController.update()));
-		app.get("/Users", OpenApiBuilder.documented(DocumentationFacotry.getDoc("getUser"), userInfoController.getAll()));
+		app.post("/UserInfo/{userInfoid}", OpenApiBuilder.documented(DocumentationFacotry.getDoc("addUser"), userInfoController.add()));
+		app.get("/Users", OpenApiBuilder.documented(DocumentationFacotry.getDoc("getUsers"), userInfoController.getAll()));
 		app.get("/UserInfo/{userInfoid}", OpenApiBuilder.documented(DocumentationFacotry.getDoc("getUserById"), userInfoController.getByUId()));
 	}
 }

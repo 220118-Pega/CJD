@@ -40,7 +40,7 @@ public class DocumentationFacotry {
 				op.addTagsItem("User");
 			}).body(userInfo.class).result("201");
 			
-		case "getUser":
+		case "getUsers":
 			return OpenApiBuilder.document().operation(op ->{
 				op.addTagsItem("User");
 			}).json("200", userInfo.class);

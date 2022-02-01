@@ -6,7 +6,6 @@ package com.revature.Expense.dl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLDataException;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -37,10 +36,8 @@ public class transactionDAO implements DAO<transaction, Integer> {
 			ResultSet rs = pstmt.executeQuery();
 			//we need to unpack the results to return something to end user
 			if(rs.next()) {
-				return new transaction(rs.getInt("userid"), 
-						rs.getDouble("transactionamount"), 
-						rs.getString("date"), 
-						rs.getString("description"));
+				transaction found = buildNewTran(rs);
+				return found;
 			}
 			
 		}catch (SQLException e) {
@@ -58,10 +55,9 @@ public class transactionDAO implements DAO<transaction, Integer> {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
-				trans.add(new transaction(rs.getInt("userid"), 
-						rs.getDouble("transactionamount"), 
-						rs.getString("date"), 
-						rs.getString("description")));
+				//easy to get
+				transaction Ntran = buildNewTran(rs);
+				trans.add(Ntran);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -115,4 +111,16 @@ public class transactionDAO implements DAO<transaction, Integer> {
 	return null;
 	}
 
+	private transaction buildNewTran(ResultSet rs) throws SQLException {
+		int Eid = rs.getInt("employid");
+		double TA = rs.getDouble("transactionamount");
+		String Date = rs.getString("date");
+		String Des = rs.getString("descrtiption");
+		transaction Ntran = new transaction(Eid,TA,Date,Des);
+		Ntran.setTransactionid(rs.getInt("transactionid"));
+		//more annoying to get
+		Ntran.StringTypeSet(rs.getString("tiep"));
+		Ntran.StringStateSet(rs.getString("state"));
+		return Ntran;
+	}
 }

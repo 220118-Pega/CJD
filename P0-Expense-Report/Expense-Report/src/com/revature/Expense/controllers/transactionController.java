@@ -4,7 +4,6 @@
 package com.revature.Expense.controllers;
 
 import com.revature.Expense.bl.RReportBL;
-import com.revature.Expense.bl.ReportBL;
 import com.revature.Expense.models.transaction;
 
 import io.javalin.http.Handler;

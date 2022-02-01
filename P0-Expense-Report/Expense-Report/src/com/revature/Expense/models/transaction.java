@@ -64,6 +64,20 @@ public class transaction {
 	}
 	
 	//enum setters for differnt states
+	public void StringStateSet(String state) {
+		switch(state) {
+		
+		case "Pending":
+			this.Pending();
+			break;
+		case "Approved":
+			this.Approve();
+			break;
+		case "Denied":
+			this.Deny();
+			break;
+		}
+	}
 	public void Pending() {
 		this.state = com.revature.Expense.models.transaction.status.Pending;
 	}
@@ -72,6 +86,23 @@ public class transaction {
 	}
 	public void Deny() {
 		this.state = com.revature.Expense.models.transaction.status.Denied;
+	}
+	
+	public void StringTypeSet(String type) {
+		switch(type) {
+		case "Lodging":
+			this.Lodging();
+			break;
+		case "Travel":
+			this.Travel();
+			break;
+		case "Food":
+			this.Food();
+			break;
+		case "Other":
+			this.Other();
+			break;
+		}
 	}
 	public void Lodging() {
 		this.type = com.revature.Expense.models.transaction.transactiontype.Lodging;
@@ -97,7 +128,19 @@ public class transaction {
 		this.transactionid = 0;
 		this.state =  com.revature.Expense.models.transaction.status.Pending;
 	}
-//userid,amount,date,type,id,status
+	//for the DAO
+	public transaction(int userid, double transactionamount, String date, String descritpion,transactiontype type, status state,int transactionid) {
+		this.userid = userid;
+		this.transactionamount = transactionamount;
+		this.date = date;
+		this.descritpion = descritpion;
+		this.type = type;
+		this.transactionid = 0;
+		this.state = state;
+		this.transactionid = transactionid;
+	}
+
+	//userid,amount,date,type,id,status
 	
 	//methods
 	//if someone gets a re

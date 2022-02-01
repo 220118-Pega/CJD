@@ -31,12 +31,12 @@ public class userInfoDAO implements DAO<userInfo, Integer> {
 	@Override
 	public userInfo findByUid(Integer employeeid) {
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()){
-			String query = "select * from userInfo where employeeid = ?";
+			String query = "select * from userInfo where employid = ?";
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, employeeid);
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()) {
-				return new userInfo(rs.getInt("employeeid"),rs.getString("Name"),rs.getBoolean("isManager"),rs.getInt("Managerid"));
+				return new userInfo(rs.getInt("employid"),rs.getString("Name"),rs.getBoolean("isManager"),rs.getInt("Managerid"));
 			}
 			}catch (SQLException e) {
 				e.printStackTrace();
@@ -53,7 +53,7 @@ public class userInfoDAO implements DAO<userInfo, Integer> {
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				users.add(new userInfo(rs.getInt("employeeid"),rs.getString("Name"),rs.getBoolean("isManager"),rs.getInt("Managerid")));
+				users.add(new userInfo(rs.getInt("employid"),rs.getString("Name"),rs.getBoolean("isManager"),rs.getInt("Managerid")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -65,7 +65,7 @@ public class userInfoDAO implements DAO<userInfo, Integer> {
 	@Override
 	public void add(userInfo newObject) {
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-			String query = "insert into userInfo (employeeid, Name, isManager, Managerid) values (?,?,?,?);";
+			String query = "insert into userInfo (employid, Name, isManager, Managerid) values (?,?,?,?);";
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, newObject.getEmployid());
 			pstmt.setString(2, newObject.getName());
