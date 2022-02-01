@@ -14,10 +14,6 @@ public class MainMenu {
 	}
 	
 public void start() {
-	//sets up the employee database
-	//ReportBL.IntializeEmployees();
-	//sets up preexisting trasaction data
-	//LoadTestingData();
 	
 	//set up inital variables
 	boolean keepGoing = true;
