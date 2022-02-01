@@ -12,7 +12,8 @@ import io.javalin.http.Handler;
  */
 public interface IController {
 	Handler getAll();
-	Handler getById();
+	Handler getByTId();
+	Handler getByUId();
 	Handler add();
 	Handler update();
 	

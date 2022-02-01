@@ -34,8 +34,7 @@ public class transactionController implements IController {
 	}
 
 	@Override
-	public Handler getById() {
-		// TODO Auto-generated method stub
+	public Handler getByTId() {
 		return ctx ->{
 			//get id of transaction we want from the path param,
 			// swe extract if from the ctx
@@ -46,7 +45,6 @@ public class transactionController implements IController {
 		}catch(NullPointerException e)
 		{
 		 ctx.res.setStatus(204);
-		 ctx.result("");
 		}
 		};
 		}
@@ -56,9 +54,12 @@ public class transactionController implements IController {
 		return ctx -> {
 			//unmarshall request body into an transaction class
 			//bodyAsClass method unmarshalls the request body into the structure of the class you input into it
-			transaction newtran = ctx.bodyAsClass(transaction.class);
+			transaction newtran = ctx.bodyStreamAsClass(transaction.class);
 			try {
-				ReportBL.
+				reportBL.addtransaction(newtran);
+				ctx.status(201);
+			}catch (Exception e) {
+				ctx.status(400);
 			}
 		};
 	}
@@ -67,6 +68,22 @@ public class transactionController implements IController {
 	public Handler update() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public Handler getByUId() {
+		return ctx ->{
+			//get id of transaction we want from the path param,
+			// swe extract if from the ctx
+			String id = ctx.pathParam("employid");
+			int actualId = Integer.parseInt(id);
+			try {
+			ctx.jsonStream(reportBL.gettransactionByUserId(actualId));
+		}catch(NullPointerException e)
+		{
+		 ctx.res.setStatus(204);
+		}
+		};
 	}
 
 }

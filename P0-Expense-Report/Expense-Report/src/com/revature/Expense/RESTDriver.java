@@ -6,6 +6,7 @@ package com.revature.Expense;
 import com.revature.Expense.bl.ReportBL;
 import com.revature.Expense.controllers.IController;
 import com.revature.Expense.controllers.transactionController;
+import com.revature.Expense.controllers.userInfoController;
 import com.revature.Expense.dl.DBRepository;
 import com.revature.Expense.dl.transactionDAO;
 import com.revature.Expense.dl.userInfoDAO;
@@ -26,18 +27,20 @@ public class RESTDriver {
 	
 	public static void main(String[] args) {
 		IController transactionController = new transactionController(new ReportBL(new DBRepository(new transactionDAO(), new userInfoDAO())));
+		IController userInfoController = new userInfoController(new ReportBL(new DBRepository(new transactionDAO(), new userInfoDAO())));
+		
 		Javalin app = Javalin.create(config -> {
 			config.registerPlugin(new OpenApiPlugin(getOpenApiOptions()));}
 		).start(7000);
 		
-		Router router = new Router(app, transactionController);
+		Router router = new Router(app, transactionController, userInfoController);
 		router.setUpEndPoints();
 	}
 		private static OpenApiOptions getOpenApiOptions() {
 			//configuring swagger
-			Info applicationInfo = new Info().version("1.0").description("Stacklite REST");//Stacklite REST change into my path
+			Info applicationInfo = new Info().version("1.0").description("Expense REST");//Stacklite REST change into my path
 			return new OpenApiOptions(applicationInfo).path("/swagger-docs")
 					.swagger(new SwaggerOptions("/swagger")
-							.title("StackLite API Docs"));//change into my path
+							.title("Expense API Docs"));//change into my path
 		}
 }
