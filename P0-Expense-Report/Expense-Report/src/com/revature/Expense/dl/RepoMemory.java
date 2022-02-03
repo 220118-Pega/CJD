@@ -99,4 +99,10 @@ public List<transaction> gettransactionByUserId(int id) {
 public List<userInfo> getAllUsers() {
 	return RepoMemory.Listofemp;
 }
+
+@Override
+public void updateState(transaction updatetran) {
+	// TODO Auto-generated method stub
+	
+}
 }

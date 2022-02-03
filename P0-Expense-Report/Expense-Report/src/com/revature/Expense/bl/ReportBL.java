@@ -44,5 +44,11 @@ public class ReportBL implements RReportBL{
 		return repo.getAllUsers();
 		
 	}
+	public void updateState(transaction updatetran) {
+		repo.updateState(updatetran);
+		
+	}
+
+
 }
 

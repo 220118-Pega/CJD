@@ -14,4 +14,8 @@ public interface IRepo {
 	void addemployee(userInfo newuser);
 	public userInfo getUserById(int id);
 	public List<userInfo> getAllUsers();
+	/**
+	 * @param updatetran
+	 */
+	public void updateState(transaction updatetran);
 }

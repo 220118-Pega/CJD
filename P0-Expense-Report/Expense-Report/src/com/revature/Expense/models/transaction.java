@@ -26,11 +26,17 @@ public class transaction {
 	public transactiontype getType() {
 		return type;
 	}
+	public String getTypename() {
+		return this.type.name();
+	}
 	public void setType(transactiontype type) {
 		this.type = type;
 	}
 	public status getState() {
 		return state;
+	}
+	public String getStatename() {
+		return this.state.name();
 	}
 	public void setState(status state) {
 		this.state = state;
@@ -146,6 +152,6 @@ public class transaction {
 	//if someone gets a re
 	@Override
 	public String toString() {
-		return "Report[employee id="+ userid + ", amount=" + transactionamount + ", date=" + date + ", type=" + type.toString() +", transaction id=" + transactionid + ", status=" + state.toString() + "  ]";
+		return "Report[employee id="+ userid + ", amount=" + transactionamount + ", date=" + date + ", type=" + type.toString() +", transaction id=" + transactionid + ", status=" + state.toString() + ", descritpion=" + descritpion + " ]";
 	}
 }

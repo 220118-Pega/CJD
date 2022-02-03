@@ -68,6 +68,7 @@ public void start() {
 			CreateUser(currentUser);
 			}
 			else {PickRealOption();}
+			break;
 		case "x":
 			GoodBye();
 			keepGoing = false;
@@ -97,6 +98,7 @@ private void Approvetransaction(userInfo currentUser) {
 	transaction updatetran = Singletransaction(currentUser);
 	if(confirm(updatetran)) {
 		updatetran.Approve();
+		ReportBL.updateState(updatetran);
 		System.out.println("Approved");}
 	myScanner.nextLine();
 	}
@@ -106,6 +108,7 @@ private void Denytransaction(userInfo currentUser) {
 	transaction updatetran = Singletransaction(currentUser);
 	if(confirm(updatetran)) {
 		updatetran.Deny();
+		ReportBL.updateState(updatetran);
 		System.out.println("Denied");
 	}	
 	myScanner.nextLine();

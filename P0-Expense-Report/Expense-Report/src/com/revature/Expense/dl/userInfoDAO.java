@@ -65,12 +65,11 @@ public class userInfoDAO implements DAO<userInfo, Integer> {
 	@Override
 	public void add(userInfo newObject) {
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
-			String query = "insert into userInfo (employid, Name, isManager, Managerid) values (?,?,?,?);";
+			String query = "insert into userInfo (Name, isManager, Managerid) values (?,?,?);";
 			PreparedStatement pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, newObject.getEmployid());
-			pstmt.setString(2, newObject.getName());
-			pstmt.setBoolean(3, newObject.isManager());
-			pstmt.setInt(4, newObject.getManagerid());
+			pstmt.setString(1, newObject.getName());
+			pstmt.setBoolean(2, newObject.isManager());
+			pstmt.setInt(3, newObject.getManagerid());
 			pstmt.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -80,8 +79,13 @@ public class userInfoDAO implements DAO<userInfo, Integer> {
 		
 	}
 
-	@Override
 	public void update(userInfo newOject) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override//applies to transaction not to employies
+	public void updateState(userInfo newOject) {
 		// TODO Auto-generated method stub
 		
 	}

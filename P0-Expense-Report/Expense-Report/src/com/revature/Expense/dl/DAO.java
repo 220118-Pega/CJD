@@ -14,5 +14,5 @@ public interface DAO<T,K> {
 	T findByUid(K id);
 	List<T> findAll();
 	void add(T newObject);
-	void update(T newOject);
+	void updateState(T newOject);
 }

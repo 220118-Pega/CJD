@@ -78,4 +78,10 @@ public class DBRepository implements IRepo {
 		return userDAO.findAll();
 	}
 
+	@Override
+	public void updateState(transaction updatetran) {
+		tranDAO.updateState(updatetran);
+		
+	}
+
 }

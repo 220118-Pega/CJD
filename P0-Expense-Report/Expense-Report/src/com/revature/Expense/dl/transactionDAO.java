@@ -9,11 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.revature.Expense.models.SortbyTid;
 import com.revature.Expense.models.transaction;
 /**
  * @author 16del
@@ -62,6 +64,7 @@ public class transactionDAO implements DAO<transaction, Integer> {
 			e.printStackTrace();
 			logger.error("Someting went wrong in findAll",e);
 		}
+		Collections.sort(trans, new SortbyTid());
 		return trans;
 	}
 
@@ -69,12 +72,14 @@ public class transactionDAO implements DAO<transaction, Integer> {
 	public void add(transaction newObject) {
 		try(Connection conn = ConnectionFactory.getInstance().getConnection())
 				{
-					String query = "insert into transaction (userid, transactionamount, date, descritpion) values (?, ?, ?, ?);";
+					String query = "insert into transactions (employid, transactionamount, date, descrtiption, tiep, state) values (?, ?, ?, ?, ?::transactiontype,?::status);";
 					PreparedStatement pstmt = conn.prepareStatement(query);
 					pstmt.setInt(1, newObject.getUserid());
 					pstmt.setDouble(2, newObject.getTransactionamount());
 					pstmt.setString(3, newObject.getDate());
 					pstmt.setString(4, newObject.getDescritpion());
+					pstmt.setString(5, newObject.getTypename());
+					pstmt.setString(6, newObject.getStatename());
 					pstmt.execute();
 				} catch (SQLException e) {
 					e.printStackTrace();
@@ -84,8 +89,18 @@ public class transactionDAO implements DAO<transaction, Integer> {
 	}
 
 	@Override
-	public void update(transaction newOject) {
-		// TODO Auto-generated method stub
+	public void updateState(transaction newObject) {
+		try(Connection conn = ConnectionFactory.getInstance().getConnection())
+		{
+			String query = "update transactions set state = ?::status where transactionid = ?";
+			PreparedStatement pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, newObject.getStatename());
+			pstmt.setInt(2, newObject.getTransactionid());
+			pstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			logger.error("trouble adding", e);
+		}
 		
 	}
 
