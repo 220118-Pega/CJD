@@ -56,8 +56,7 @@ public class transactionDAO implements DAO<transaction, Integer> {
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
 				//easy to get
-				transaction Ntran = buildNewTran(rs);
-				trans.add(Ntran);
+				trans.add(buildNewTran(rs));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
