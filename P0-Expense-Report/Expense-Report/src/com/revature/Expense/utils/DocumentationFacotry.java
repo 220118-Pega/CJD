@@ -27,12 +27,12 @@ public class DocumentationFacotry {
 			
 		case "getTransactionById":
 			return OpenApiBuilder.document().operation(op -> 
-			{op.addTagsItem("transaction");})
+			{op.addTagsItem("Transaction");})
 					.jsonArray("200", transaction.class);
 			
 		case "addTransaction":
 			return OpenApiBuilder.document().operation(op -> 
-			{op.addTagsItem("transaction");})
+			{op.addTagsItem("Transaction");})
 					.body(transaction.class).result("201");
 		
 		case "addUser":

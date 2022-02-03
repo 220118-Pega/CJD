@@ -25,11 +25,17 @@ public class Router {
 		this.userInfoController = userInfoController;
 	}
 	public void setUpEndPoints() {
+		//get all transactions
 		app.get("/Transactions",OpenApiBuilder.documented(DocumentationFacotry.getDoc("getTransaction"),transactionController.getAll()));
-		app.get("/Transaction/{transactionid}", OpenApiBuilder.documented(DocumentationFacotry.getDoc("getTransactionById"), transactionController.getByTId()));
+		//get 1 transaction
+		app.get("/Transactions/{transactionid}", OpenApiBuilder.documented(DocumentationFacotry.getDoc("getTransactionById"), transactionController.getByTId()));
+		//add a transaction to database
 		app.post("/Transactions", OpenApiBuilder.documented(DocumentationFacotry.getDoc("addTransaction"), transactionController.add()));
-		app.post("/UserInfo/{userInfoid}", OpenApiBuilder.documented(DocumentationFacotry.getDoc("addUser"), userInfoController.add()));
+		//add a user to database
+		app.post("/UserInfo/{Name}", OpenApiBuilder.documented(DocumentationFacotry.getDoc("addUser"), userInfoController.add()));
+		//get all users
 		app.get("/Users", OpenApiBuilder.documented(DocumentationFacotry.getDoc("getUsers"), userInfoController.getAll()));
-		app.get("/UserInfo/{userInfoid}", OpenApiBuilder.documented(DocumentationFacotry.getDoc("getUserById"), userInfoController.getByUId()));
+		//get 1 user
+		app.get("/UserInfo/{employid}", OpenApiBuilder.documented(DocumentationFacotry.getDoc("getUserById"), userInfoController.getByUId()));
 	}
 }
