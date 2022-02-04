@@ -55,7 +55,7 @@ public class transactionDAO implements DAO<transaction, Integer> {
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			String query = "select * from transactions";
 			PreparedStatement stmt = conn.prepareStatement(query);
-			ResultSet rs = stmt.executeQuery(query);
+			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				//easy to get
 				trans.add(buildNewTran(rs));
