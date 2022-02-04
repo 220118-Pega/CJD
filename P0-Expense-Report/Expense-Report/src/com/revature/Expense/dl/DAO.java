@@ -15,4 +15,5 @@ public interface DAO<T,K> {
 	List<T> findAll();
 	void add(T newObject);
 	void updateState(T newOject);
+	T getLatest();
 }

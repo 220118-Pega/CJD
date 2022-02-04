@@ -54,7 +54,7 @@ public class transactionDAO implements DAO<transaction, Integer> {
 		List<transaction> trans = new ArrayList<transaction>();
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
 			String query = "select * from transactions";
-			Statement stmt = conn.createStatement();
+			PreparedStatement stmt = conn.prepareStatement(query);
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
 				//easy to get
@@ -136,5 +136,15 @@ public class transactionDAO implements DAO<transaction, Integer> {
 		Ntran.StringTypeSet(rs.getString("tiep"));
 		Ntran.StringStateSet(rs.getString("state"));
 		return Ntran;
+	}
+
+	@Override
+	public transaction getLatest() {
+		List<transaction> AllTran = findAll();
+		transaction LatestTran = new transaction(0,0,"zero","zero");
+		if(AllTran.size() > 0) {
+			LatestTran = AllTran.get(AllTran.size() - 1);
+		}
+		return LatestTran;
 	}
 }

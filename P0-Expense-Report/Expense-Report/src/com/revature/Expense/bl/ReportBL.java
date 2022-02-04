@@ -48,6 +48,9 @@ public class ReportBL implements RReportBL{
 		repo.updateState(updatetran);
 		
 	}
+	public transaction getLatestReport() {
+		return repo.getLatesttransaction();
+	}
 
 
 }

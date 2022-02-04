@@ -105,4 +105,17 @@ public void updateState(transaction updatetran) {
 	// TODO Auto-generated method stub
 	
 }
+
+@Override
+public transaction getLatesttransaction() {
+	transaction LatestTran = new transaction(0,0,"zero","zero");
+	int testid = 0;
+	for (transaction tran:reportoftran) {
+		if (tran.getTransactionid() > testid) {
+			LatestTran = tran;
+			testid = tran.getTransactionid();
+		}
+	}
+	return LatestTran;
+}
 }

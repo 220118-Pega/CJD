@@ -15,4 +15,5 @@ public interface RReportBL {
 	transaction gettransactionByTranId(int id);
 	List<transaction> gettransactionByUserId(int id);
 	List<userInfo> getAllUsers();
+	public transaction getLatestReport();
 }

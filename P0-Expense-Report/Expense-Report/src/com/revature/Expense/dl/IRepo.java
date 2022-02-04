@@ -18,4 +18,8 @@ public interface IRepo {
 	 * @param updatetran
 	 */
 	public void updateState(transaction updatetran);
+	/**
+	 * @return
+	 */
+	public transaction getLatesttransaction();
 }

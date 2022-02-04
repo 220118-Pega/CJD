@@ -84,4 +84,9 @@ public class DBRepository implements IRepo {
 		
 	}
 
+	@Override
+	public transaction getLatesttransaction() {
+		return tranDAO.getLatest();
+	}
+
 }

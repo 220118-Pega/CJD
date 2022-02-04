@@ -12,7 +12,7 @@ public class MainMenu {
 		this.myScanner = myScanner;
 		this.ReportBL = ReportBL;
 	}
-	
+//main menu
 public void start() {
 	
 	//set up inital variables
@@ -24,7 +24,7 @@ public void start() {
 	accessLevel = userIntAnswer();
 	myScanner.nextLine();
 	userInfo currentUser = ReportBL.getUserById(accessLevel);
-	//if dummy id is returned quits as they aren't a user or quit
+	//if dummy id or null is returned quits as they aren't a user or quit
 	if (accessLevel == 0 || currentUser == null) {
 		System.out.println("you are not a athourized user goodbye");
 		keepGoing = false;
@@ -80,38 +80,41 @@ public void start() {
 		}while(keepGoing);}
 }
 
+//menu options
 //creates a new employee and adds them
 private void CreateUser(userInfo currrentUser) {
+	//get new persons name no real restriction on name
 	System.out.println("Please enter new employee's name");
 	QuitText();
 	String name = myScanner.nextLine();
+	//allow them to quit
 	if(name.equals("x")) {
 		GoodBye();
 	}
+	//make a new non manager user with the manager entering them becoming their manager
+	else {
 	userInfo newperson = new userInfo(name, currrentUser.getManagerid());
 	ReportBL.addemployee(newperson);
 	System.out.println(name + " has been added as a employee with you as their manager");
-}
+}}
 //approves a transaction
 private void Approvetransaction(userInfo currentUser) {
-	// if given incorect id num then a dummy is changed need to give warning
+	// if given incorect id num then a dummy is returned
 	transaction updatetran = Singletransaction(currentUser);
 	if(confirm(updatetran)) {
 		updatetran.Approve();
 		ReportBL.updateState(updatetran);
 		System.out.println("Approved");}
-	myScanner.nextLine();
 	}
 //denys a transaction
 private void Denytransaction(userInfo currentUser) {
-	// if given incorect id num then a dummy is changed
+	// if given incorect id num then a dummy is returned
 	transaction updatetran = Singletransaction(currentUser);
 	if(confirm(updatetran)) {
 		updatetran.Deny();
 		ReportBL.updateState(updatetran);
 		System.out.println("Denied");
 	}	
-	myScanner.nextLine();
 }
 //is the menu to retrive records from memory repo has options for employees and managers currently trusts people to tell the truth
 private void getAlltransaction(userInfo currentUser) {
@@ -163,6 +166,7 @@ private void getAlltransaction(userInfo currentUser) {
 				GetAllOfState(Integer.parseInt(choice), currentUser);
 				keepGoing = false;
 				break;
+			//manager only option allows them to get any employee's records
 			case "6":
 				if(manager) {
 					EmployeeIdRequest();
@@ -189,6 +193,7 @@ private void createtransaction(userInfo currentUser) {
 	//do while loop to get a accurate tran amout
 	System.out.println("Please enter transaction amount: ");
 	QuitText();;
+	//same structure as userint but its double so cant use like that
 	while(keepGoing) {
 		if (myScanner.hasNextDouble()){
 				transactionamount = myScanner.nextDouble();
@@ -203,6 +208,7 @@ private void createtransaction(userInfo currentUser) {
 				System.out.println("invaild number please enter vaild amount: ");
 				QuitText();}
 		}}
+	//allow them to quit with 0 because why care about a 0 dollar reinburstment
 	if(transactionamount == 0) {
 		GoodBye();
 	}
@@ -232,7 +238,7 @@ private void createtransaction(userInfo currentUser) {
 	while(keepGoing) {
 	MainTypeMenu();
 	String transactiontype = myScanner.nextLine();
-	//type
+	//picking the type
 	switch(transactiontype) {
 	case "1":
 		newReport.Lodging();
@@ -250,6 +256,7 @@ private void createtransaction(userInfo currentUser) {
 		newReport.Other();
 		keepGoing = false;
 		break;
+	//usering the quit variable for ease of use if they quit then transaction is simply not saved
 	case "x":
 		keepGoing = false;
 		quit = 1;
@@ -264,10 +271,18 @@ private void createtransaction(userInfo currentUser) {
 	else {
 	//saving
 	ReportBL.addtransaction(newReport);
+	//transaction is only given an id by the 
+	//database so need to get it back from database 
+	//to show user saved properly
+	newReport = ReportBL.getLatestReport();
 	System.out.println(newReport);
 	System.out.println("");
 	
 }}}}}
+
+
+
+//helper methods
 //prints all transactions of a type manager can print all a employee can only print their own
 private void GetAllOfState(int choice,userInfo currentUser) {
 	transaction helper = new transaction(0,1.0,"zero","zero");
@@ -305,9 +320,6 @@ private int userIntAnswer() {
 	}}
 	return id;
 }
-
-//contains the simplifications to above code by taking repeating code and turning those to a method
-
 //the similar process of approve and deny turns out thats the process to get one record
 private transaction Singletransaction(userInfo currentUser) {
 	int tranid = 0;
@@ -341,7 +353,6 @@ private boolean confirm(transaction updatetran) {
 	return real;
 }
 //prints all employee transactions
-//common tasks method out for ease of code
 private void GetEmpRecords(int userid) {
 	for(transaction user:ReportBL.gettransactionByUserId(userid)) {
 		if(user.getUserid() == userid) {
@@ -349,6 +360,8 @@ private void GetEmpRecords(int userid) {
 			}}
 	myScanner.nextLine();//this is to clear the line so things arent left for future checks
 }
+
+
 //these are all just strings that were repeated or long so put them down here to make code above pretty
 private void PickRealOption() {
 	System.out.println("Please only put listed options");
