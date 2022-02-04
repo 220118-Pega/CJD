@@ -1,24 +1,20 @@
-/*package test.java;
+package com.revature.Expense.Testing;
 
-import  org.junit.Assert;
+import static  org.junit.Assert;
 import org.junit.jupiter.api.Test;
-
-import com.revature.Expense.models.transaction.status;
-import com.revature.Expense.models.transaction.transactiontype;
-
+import transaction;
 /**
  * to test transaction class
  
 
 /**
  * @author 16del
- *
+ */
  
 class TransactionTest {
-
+	transaction testtran = new transaction(1,1.0,"date","des"));
 	@Test
 	void test() {
 		fail("Not yet implemented");
 	}
 }
-*/
