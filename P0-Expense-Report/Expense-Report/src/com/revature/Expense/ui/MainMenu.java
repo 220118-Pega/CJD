@@ -23,15 +23,15 @@ public void start() {
 	EmployeeIdRequest();
 	accessLevel = userIntAnswer();
 	myScanner.nextLine();
+	userInfo currentUser = ReportBL.getUserById(accessLevel);
 	//if dummy id is returned quits as they aren't a user or quit
-	if (accessLevel == 0) {
+	if (accessLevel == 0 || currentUser == null) {
 		System.out.println("you are not a athourized user goodbye");
 		keepGoing = false;
 	}
-	//gets the user item outside of the loops so only recorded once
-	userInfo currentUser = ReportBL.getUserById(accessLevel);
 	// if not a manager then you are a employee and can make reimpertment requests and view your old ones
 	//if you are a manager you have the full range of options
+	else {
 	do {
 		if(currentUser.isManager()){
 			MainManagerTextMenu();}
@@ -77,7 +77,7 @@ public void start() {
 			PickRealOption();
 			break;
 		}
-		}while(keepGoing);
+		}while(keepGoing);}
 }
 
 //creates a new employee and adds them
@@ -168,6 +168,8 @@ private void getAlltransaction(userInfo currentUser) {
 					EmployeeIdRequest();
 					int userid = userIntAnswer();
 					GetEmpRecords(userid);}
+				PickRealOption();
+				break;
 			case "x":
 				keepGoing = false;
 				break;
@@ -272,7 +274,6 @@ private void GetAllOfState(int choice,userInfo currentUser) {
 	if (choice == 3) {helper.Approve();}
 	if (choice == 4) {helper.Deny();}
 	if (choice == 5) {helper.Pending();}
-	if(currentUser.isManager()) {
 	for(transaction transaction:ReportBL.gettransaction()) {
 		if(transaction.getState() == helper.getState()) {
 			if(currentUser.isManager()) {
@@ -281,7 +282,7 @@ private void GetAllOfState(int choice,userInfo currentUser) {
 				if(transaction.getUserid() == currentUser.getEmployid()) {
 					System.out.println(transaction);}	
 		}}
-	}}}
+	}}
 //takes person through a loop to get a accurate id number with 0 being the dummny number if they exit early
 private int userIntAnswer() {
 	int id = 0;
