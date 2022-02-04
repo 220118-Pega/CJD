@@ -23,7 +23,7 @@ import com.revature.Expense.models.transaction;
  */
 public class transactionDAO implements DAO<transaction, Integer> {
 	private final Logger logger = LogManager.getLogger(this.getClass());
-	
+	//finds transaction by its transaction id
 	@Override
 	public transaction findByTId(Integer Tid) {
 		//try with resources block after the try block finishes excuting
@@ -48,7 +48,7 @@ public class transactionDAO implements DAO<transaction, Integer> {
 		}
 		return null;
 	}
-
+	//returns all transactions in database
 	@Override
 	public List<transaction> findAll() {
 		List<transaction> trans = new ArrayList<transaction>();
@@ -64,10 +64,11 @@ public class transactionDAO implements DAO<transaction, Integer> {
 			e.printStackTrace();
 			logger.error("Someting went wrong in findAll",e);
 		}
+		//sort by transaction id before returning for consitant results
 		Collections.sort(trans, new SortbyTid());
 		return trans;
 	}
-
+	//adds transaction to database
 	@Override
 	public void add(transaction newObject) {
 		try(Connection conn = ConnectionFactory.getInstance().getConnection())
@@ -87,7 +88,7 @@ public class transactionDAO implements DAO<transaction, Integer> {
 				}
 		
 	}
-
+	//updates transaction state based on its transaction id
 	@Override
 	public void updateState(transaction newObject) {
 		try(Connection conn = ConnectionFactory.getInstance().getConnection())
@@ -103,7 +104,7 @@ public class transactionDAO implements DAO<transaction, Integer> {
 		}
 		
 	}
-
+	//returns transaction by its employee id
 	@Override
 	public transaction findByUid(Integer Uid) {
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -124,7 +125,8 @@ public class transactionDAO implements DAO<transaction, Integer> {
 	}
 	return null;
 	}
-
+	//helper function that builds a transaction with appopiate rs statments
+	//made to have higher code look nicer
 	private transaction buildNewTran(ResultSet rs) throws SQLException {
 		int Eid = rs.getInt("employid");
 		double TA = rs.getDouble("transactionamount");
@@ -138,6 +140,8 @@ public class transactionDAO implements DAO<transaction, Integer> {
 		return Ntran;
 	}
 
+	//find all sorts transactions by id before returning so last
+	//transaction in list is the latest transaction
 	@Override
 	public transaction getLatest() {
 		List<transaction> AllTran = findAll();

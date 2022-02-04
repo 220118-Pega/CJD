@@ -9,16 +9,18 @@ import com.revature.Expense.models.transaction;
 import io.javalin.http.Handler;
 
 /**
+ * controlls the router for REST redirects to correct function
  * @author 16del
  *
  */
 public class transactionController implements IController {
 
 	private RReportBL reportBL;
-	
+	//
 	public transactionController (RReportBL reportBL) {
 		this.reportBL = reportBL;
 	}
+	//gets all transactions
 	@Override
 	public Handler getAll() {
 		// a means to pass functions as parameters
@@ -31,7 +33,7 @@ public class transactionController implements IController {
 			ctx.jsonStream(reportBL.gettransaction());
 		};
 	}
-
+	//returns transaction by its id
 	@Override
 	public Handler getByTId() {
 		return ctx ->{
@@ -47,7 +49,7 @@ public class transactionController implements IController {
 		}
 		};
 		}
-
+	//adds a transaction to the database
 	@Override
 	public Handler add() {
 		return ctx -> {
@@ -62,13 +64,13 @@ public class transactionController implements IController {
 			}
 		};
 	}
-
+	//not implented suppose i could add the update state one
 	@Override
 	public Handler update() {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+	//get transaction based on the employee id
 	@Override
 	public Handler getByUId() {
 		return ctx ->{

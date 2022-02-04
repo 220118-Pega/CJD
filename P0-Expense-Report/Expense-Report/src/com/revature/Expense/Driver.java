@@ -10,9 +10,14 @@ import com.revature.Expense.ui.MainMenu;
 
 public class Driver {
 	//"zero" and 0 are dummy numbers if they show up in entries then its a dummy entry
-	//main menu is start of program and starts running the main menu
+	//main menu is start of program and starts running the main menu with links to database
 	public static void main(String[] args) {
-		MainMenu menu = new MainMenu(new Scanner(System.in),new ReportBL(new DBRepository(new transactionDAO(), new userInfoDAO())));
+		MainMenu menu = new MainMenu(
+				new Scanner(System.in),
+				new ReportBL(
+				new DBRepository(
+				new transactionDAO(), 
+				new userInfoDAO())));
 		menu.start();
 
 	}

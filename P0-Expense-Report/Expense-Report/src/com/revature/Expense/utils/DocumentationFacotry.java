@@ -18,33 +18,33 @@ public class DocumentationFacotry {
 	
 	public static OpenApiDocumentation getDoc(String endPoint) {
 		switch(endPoint) {
-		
+		//get all transactions
 		case "getTransaction":
 			return OpenApiBuilder.document()
 					.operation(op -> 
 			{op.addTagsItem("Transaction");
 			}).jsonArray("200", transaction.class);
-			
+		//get 1 transaction by id	
 		case "getTransactionById":
 			return OpenApiBuilder.document().operation(op -> 
 			{op.addTagsItem("Transaction");})
 					.jsonArray("200", transaction.class);
-			
+		//add transaction to database	
 		case "addTransaction":
 			return OpenApiBuilder.document().operation(op -> 
 			{op.addTagsItem("Transaction");})
 					.body(transaction.class).result("201");
-		
+		//add user to database
 		case "addUser":
 			return OpenApiBuilder.document().operation(op ->{
 				op.addTagsItem("User");
 			}).body(userInfo.class).result("201");
-			
+		//get all users from database	
 		case "getUsers":
 			return OpenApiBuilder.document().operation(op ->{
 				op.addTagsItem("User");
 			}).json("200", userInfo.class);
-		
+		//get 1 user by employee id
 		case "getUserById":
 			return OpenApiBuilder.document().operation(op -> {
 				op.addTagsItem("User");

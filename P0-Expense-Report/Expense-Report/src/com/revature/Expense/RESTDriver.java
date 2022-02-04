@@ -18,6 +18,7 @@ import io.javalin.plugin.openapi.OpenApiPlugin;
 import io.javalin.plugin.openapi.ui.SwaggerOptions;
 import io.swagger.v3.oas.models.info.Info;
 /**
+ * creates the swagger api to test end points
  * @author 16del
  *
  */

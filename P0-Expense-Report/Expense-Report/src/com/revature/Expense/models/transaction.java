@@ -93,7 +93,7 @@ public class transaction {
 	public void Deny() {
 		this.state = com.revature.Expense.models.transaction.status.Denied;
 	}
-	
+	//enum setters for different typs
 	public void StringTypeSet(String type) {
 		switch(type) {
 		case "Lodging":
@@ -149,7 +149,7 @@ public class transaction {
 	//userid,amount,date,type,id,status
 	
 	//methods
-	//if someone gets a re
+	//print out transactions in certain setting
 	@Override
 	public String toString() {
 		return "Report[employee id="+ userid + ", amount=" + transactionamount + ", date=" + date + ", type=" + type.toString() +", transaction id=" + transactionid + ", status=" + state.toString() + ", descritpion=" + descritpion + " ]";

@@ -9,6 +9,7 @@ import com.revature.Expense.models.userInfo;
 import io.javalin.http.Handler;
 
 /**
+ * handles router for userInfo
  * @author 16del
  *
  */
@@ -18,33 +19,31 @@ public class userInfoController implements IController {
 	public userInfoController(RReportBL reportBL) {
 		this.reportBL = reportBL;
 	}
-	
+	//returns all users from database
 	@Override
 	public Handler getAll() {
-		// TODO Auto-generated method stub
 		return ctx -> {
 			ctx.jsonStream(reportBL.getAllUsers());
 		};
 	}
-
+	//addes a employee to the database
 	@Override
 	public Handler add() {
 		return ctx -> {
 			reportBL.addemployee(ctx.bodyStreamAsClass(userInfo.class));
 		};
 	}
-
+	//currently nothing to update about employee's so not implented
 	@Override
 	public Handler update() {
 		return null;
 	}
-
+	//only applies to transactions so not implented
 	@Override
 	public Handler getByTId() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
+	//returns specific employee based on id
 	@Override
 	public Handler getByUId() {
 		return ctx -> {

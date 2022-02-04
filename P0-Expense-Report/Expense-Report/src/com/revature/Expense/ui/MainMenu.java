@@ -336,35 +336,47 @@ private transaction Singletransaction(userInfo currentUser) {
 	System.out.println("Enter the id of the transaction: ");
 	tranid = userIntAnswer();
 	transaction updatetran = ReportBL.gettransactionByTranId(tranid);
-	//if manager just check its not the dummy
-	if(currentUser.isManager()) {
-		confirm(updatetran);
-		return updatetran;
+	//first confirm that the transaction is real
+	if(confirm(updatetran)) {
+		//if manager they can access any transaction
+	if(currentUser.isManager()) { {
+			return updatetran;}
 	}
 	else {
+		//if employee the transaction must be theirs to access it
 		if(updatetran.getUserid() == currentUser.getEmployid()) {
 			return updatetran;
 		}
+		//yell at employee and return a dummy transaction 
 		else {
 			transaction noAccess = new transaction(0,0,"zero","zero");
 			System.out.println("you did not have access to that transaction");
 			return noAccess;
 		}
+	}}
+	else {
+		//return a dummy transaction confirm told them why they get dummy
+		transaction badtran = new transaction(0,0,"zero","zero");
+		return badtran;
 	}
 }
 //confirms that the transaction is a real transaction and not the dummy transaction
 private boolean confirm(transaction updatetran) {
+	//set up variable
 	boolean real = false;
+	//first check if null then if not null check if dummy
 	if( updatetran == null || updatetran.getTransactionid() == 0 ) {
 		System.out.println("No Record of Transaction with that id check id used.");
 		myScanner.nextLine();
 	}else {
+		//its real so return true
 		real = true;
 	}
 	return real;
 }
-//prints all employee transactions
+ //prints all employee transactions
 private void GetEmpRecords(int userid) {
+	//gets all transactions in database and prints all transactions that belong to that employee id
 	for(transaction user:ReportBL.gettransactionByUserId(userid)) {
 		if(user.getUserid() == userid) {
 			System.out.println(user);
@@ -374,12 +386,15 @@ private void GetEmpRecords(int userid) {
 
 
 //these are all just strings that were repeated or long so put them down here to make code above pretty
+//if wrong answer entered
 private void PickRealOption() {
 	System.out.println("Please only put listed options");
 }
+//exiting a menu
 private void GoodBye() {
 	System.out.println("Good Bye \n");
 }
+//main menu for managers
 private void MainManagerTextMenu() {
 	System.out.println("Welcome to expense reports");
 	System.out.println("[1] Create a reinburstment request");
@@ -389,12 +404,14 @@ private void MainManagerTextMenu() {
 	System.out.println("[5] Add new employee");
 	QuitText();
 }
+//main menu for employee's
 private void MainEmployeeMenu() {
 	System.out.println("Welcome to expense reports");
 	System.out.println("[1] Create a reinburstment request");
 	System.out.println("[2] Records of requests");
 	QuitText();
 }
+//types menu in create transactions
 private void MainTypeMenu() {
 	System.out.println("please enter type of transaction");
 	System.out.println("[1] Lodging");
@@ -403,6 +420,7 @@ private void MainTypeMenu() {
 	System.out.println("[4] Other");
 	QuitText();
 }
+//manager menu in get records function
 private void MainRecordsManagerMenu() {
 	System.out.println("[1] list all records");
 	System.out.println("[2] list 1 transaction");
@@ -412,6 +430,7 @@ private void MainRecordsManagerMenu() {
 	System.out.println("[6] list 1 employee's records");
 	QuitText();
 }
+//employee menu in get records function
 private void MainRecordsEmployeeMenu() {
 	System.out.println("[1] list all your records");
 	System.out.println("[2] list 1 transaction");
@@ -420,10 +439,12 @@ private void MainRecordsEmployeeMenu() {
 	System.out.println("[5] list all your pending records");
 	QuitText();
 }
+//ask for employee id and quit option
 private void EmployeeIdRequest() {
 	System.out.println("Please enter a employee id");
 	QuitText();
 }
+//text that says how to quit
 private void QuitText() {
 	System.out.println("or enter [x] to quit:");
 }

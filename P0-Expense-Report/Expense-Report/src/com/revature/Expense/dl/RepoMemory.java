@@ -11,6 +11,7 @@ import com.revature.Expense.models.userInfo;
 
 /**
  * is the point where the data lives and can be messed with and returned
+ * since DAO implanted seems no longer needed or called on
  * @author 16del
  *
  */

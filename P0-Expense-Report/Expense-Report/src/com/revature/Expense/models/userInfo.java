@@ -51,23 +51,4 @@ public class userInfo {
 		this.Managerid = Mid;
 	}
 }
-/*
- * how to use userinfo
- * 
- * first initialize with a preset thing of users
- * some managers and god
- * at start have person enter employid check against list to see if they are real employee
- * next check if manager to determine how much of menu they have access too
- * finally if manager check if god
- * 
- * if regular employee they can create a report, can show list of all their transactions/ can show list of all their transactions depending on status
- * 
- * if manager they can do everything a regular employee can do
- * they gain access to approve, deny by transaction id
- * they can add additional regular employee to system
- *
- * if manager id is god level they can change users into managers
- * only god can make another god
- * 
- * */
 

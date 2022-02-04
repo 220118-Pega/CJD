@@ -23,14 +23,14 @@ import com.revature.Expense.models.userInfo;
  */
 public class userInfoDAO implements DAO<userInfo, Integer> {
 	private final Logger logger = LogManager.getLogger(this.getClass());
-	
+	//does not apply to user info here because of implementation
 	@Override
 	public userInfo findByTId(Integer id) {
 		// TODO Auto-generated method stub
 		// this is just for transactionDAO doesnt apply to user
 		return null;
 	}
-
+	//returns a user based on employee id
 	@Override
 	public userInfo findByUid(Integer employeeid) {
 		try (Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -47,7 +47,7 @@ public class userInfoDAO implements DAO<userInfo, Integer> {
 			}
 			return null;
 	}
-
+	//returns all users in database
 	@Override
 	public List<userInfo> findAll() {
 		List<userInfo> users = new ArrayList<userInfo>();
@@ -65,10 +65,11 @@ public class userInfoDAO implements DAO<userInfo, Integer> {
 			e.printStackTrace();
 			logger.error("error connecting to the database",e);
 		}
+		//sorts based on employee id because i like it that way
 		Collections.sort(users, new SortbyUid());
 		return users;
 	}
-
+	//add a new user to the database
 	@Override
 	public void add(userInfo newObject) {
 		try(Connection conn = ConnectionFactory.getInstance().getConnection()){
@@ -85,18 +86,19 @@ public class userInfoDAO implements DAO<userInfo, Integer> {
 		}
 		
 	}
-
+	//currently not implented probably use to change users
 	public void update(userInfo newOject) {
-		// TODO Auto-generated method stub
 		
 	}
-
+	//does not apply to users added because of implementation
 	@Override//applies to transaction not to employies
 	public void updateState(userInfo newOject) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	//since findall sorts all users by employee id can just grab last
+	//employee in list they are the latest employee to be added
 	@Override
 	public userInfo getLatest() {
 		List<userInfo> AllUsers = findAll();

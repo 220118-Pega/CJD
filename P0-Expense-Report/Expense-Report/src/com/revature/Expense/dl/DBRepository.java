@@ -16,23 +16,23 @@ import com.revature.Expense.models.userInfo;
 public class DBRepository implements IRepo {
 	private DAO<transaction,Integer> tranDAO;
 	private DAO<userInfo, Integer> userDAO;
-	
+	//creates DBRepository with DAO for the differnt tables
 	public DBRepository( DAO<transaction,Integer> tranDAO, DAO<userInfo, Integer> userDAO) {
 		this.tranDAO = tranDAO;
 		this.userDAO = userDAO;
 	}
-	
+	//forwards add a transaction to database request
 	@Override
 	public void addtransaction(transaction newtran) {
 		tranDAO.add(newtran);
 		
 	}
-
+	//returns all transactions in database
 	@Override
 	public List<transaction> gettransaction() {
 		return tranDAO.findAll();
 	}
-
+	//returns transaction based on id returns null if not in database
 	@Override
 	public transaction gettransactionByTranId(int id) {
 		// the bl requires isn't the version of the transaction
@@ -48,7 +48,7 @@ public class DBRepository implements IRepo {
  * */
 		
 	}
-
+	//gets all transactions then adds the ones that match userid to the return list returns empty list if no match\ note will have error if database is empty
 	@Override
 	public List<transaction> gettransactionByUserId(int id) {
 		List<transaction> alltran = tranDAO.findAll();
@@ -60,30 +60,32 @@ public class DBRepository implements IRepo {
 		}
 		return usertran;
 	}
-
+	//forward request to add employee to database to userdao
 	@Override
 	public void addemployee(userInfo newuser) {
 		userDAO.add(newuser);
 		
 	}
-
+	//gets user information by id returns null if non there
 	@Override
 	public userInfo getUserById(int id) {
 		userInfo wanteduser = userDAO.findByUid(id);
 		return wanteduser;
 	}
-
+	//returns all users from database
 	@Override
 	public List<userInfo> getAllUsers() {
 		return userDAO.findAll();
 	}
 
+	//updates the state of a transaction in the databse
 	@Override
 	public void updateState(transaction updatetran) {
 		tranDAO.updateState(updatetran);
 		
 	}
 
+	//returns transaction with largest transaction id that should be the last one to be added
 	@Override
 	public transaction getLatesttransaction() {
 		return tranDAO.getLatest();
