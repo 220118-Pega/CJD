@@ -285,14 +285,18 @@ private void createtransaction(userInfo currentUser) {
 //helper methods
 //prints all transactions of a type manager can print all a employee can only print their own
 private void GetAllOfState(int choice,userInfo currentUser) {
+	//creates a dummy helper to make comparasions easy
 	transaction helper = new transaction(0,1.0,"zero","zero");
 	if (choice == 3) {helper.Approve();}
 	if (choice == 4) {helper.Deny();}
 	if (choice == 5) {helper.Pending();}
+	//compares all transactions with dummy to see if its the right state
 	for(transaction transaction:ReportBL.gettransaction()) {
 		if(transaction.getState() == helper.getState()) {
+			//if manager they can just get it
 			if(currentUser.isManager()) {
 				System.out.println(transaction);}
+			//if employee they can only get their own
 			else {
 				if(transaction.getUserid() == currentUser.getEmployid()) {
 					System.out.println(transaction);}	
@@ -300,8 +304,10 @@ private void GetAllOfState(int choice,userInfo currentUser) {
 	}}
 //takes person through a loop to get a accurate id number with 0 being the dummny number if they exit early
 private int userIntAnswer() {
+	//set up variables and id is set to dummy amount
 	int id = 0;
 	boolean keepGoing = true;
+	//us a while loop to get a int answer from user
 	while(keepGoing) {
 			if (myScanner.hasNextInt()){
 					id = myScanner.nextInt();
@@ -309,23 +315,28 @@ private int userIntAnswer() {
 					break;
 			}
 			else {
+				//gives user a chance to quit by saying x instead of int
 				String answer = myScanner.nextLine();
 				if(answer.equals("x")) {
 					keepGoing = false;
 					break;
 				}
+				//use vague id language so i can use it for multiple types of id
 				else {
 					System.out.println("invaild id please enter vaild id: ");
 					QuitText();}
 	}}
+	//return a int or 0 my dummy number if user enters 0 then it will assume they want to quit
 	return id;
 }
 //the similar process of approve and deny turns out thats the process to get one record
 private transaction Singletransaction(userInfo currentUser) {
+	//set up variables with 0 being dummy number
 	int tranid = 0;
 	System.out.println("Enter the id of the transaction: ");
 	tranid = userIntAnswer();
 	transaction updatetran = ReportBL.gettransactionByTranId(tranid);
+	//if manager just check its not the dummy
 	if(currentUser.isManager()) {
 		confirm(updatetran);
 		return updatetran;
@@ -344,7 +355,7 @@ private transaction Singletransaction(userInfo currentUser) {
 //confirms that the transaction is a real transaction and not the dummy transaction
 private boolean confirm(transaction updatetran) {
 	boolean real = false;
-	if(updatetran.getTransactionid() == 0) {
+	if( updatetran == null || updatetran.getTransactionid() == 0 ) {
 		System.out.println("No Record of Transaction with that id check id used.");
 		myScanner.nextLine();
 	}else {
