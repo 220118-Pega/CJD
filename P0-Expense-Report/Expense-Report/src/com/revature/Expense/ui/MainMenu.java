@@ -1,5 +1,6 @@
 package com.revature.Expense.ui;
 
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import com.revature.Expense.bl.ReportBL;
 import com.revature.Expense.models.transaction;
@@ -218,17 +219,34 @@ private void createtransaction(userInfo currentUser) {
 	}
 	else {
 	keepGoing = true;
-	myScanner.reset();
 	
-	//they can do anything to date need to make them enter a date format
-	System.out.println("Please enter date of transaction: ");
-	QuitText();
-	myScanner.reset();
-	String date = myScanner.nextLine();
-	if(date.equals("x")) {
+	//they can enter the date in the right format may want some simple checks to insure reasonable dates
+	SimpleDateFormat dateformat = new SimpleDateFormat("dd/MM/yyyy");
+	dateformat.setLenient(false);//i want the right format
+	String userdate = "x";
+	while(keepGoing) {
+		myScanner.reset();
+		userdate = myScanner.nextLine();
+		try {
+			dateformat.parse(userdate);
+			keepGoing = false;
+		}
+		catch(Exception e) {
+			if(userdate.equals("x")) {
+				keepGoing = false;
+			}
+			else {	
+			System.out.println("Please enter dd/MM/YYYY format");
+			QuitText();}
+		}
+		
+		
+	
+	
+	}if(userdate.equals("x")) {
 		GoodBye();
 	}else {
-		
+		keepGoing = true;
 	//they can say anything for descrption no need to control it
 	System.out.println("Please enter a descrption of the transaction: ");
 	QuitText();
@@ -237,10 +255,11 @@ private void createtransaction(userInfo currentUser) {
 	if(descrption.equals("x")) {
 		GoodBye();
 	}
+	
 	else {
 	
 	//making new transaction with info
-	transaction newReport = new transaction(userid,transactionamount,date,descrption);
+	transaction newReport = new transaction(userid,transactionamount,userdate,descrption);
 	
 	// adding the right type
 	while(keepGoing) {
@@ -394,7 +413,8 @@ private void GetEmpRecords(int userid) {
 }
 
 
-//these are all just strings that were repeated or long so put them down here to make code above pretty
+//these are all just strings that were repeated or long so put them down here 
+//to make code above pretty
 //if wrong answer entered
 private void PickRealOption() {
 	System.out.println("Please only put listed options");
