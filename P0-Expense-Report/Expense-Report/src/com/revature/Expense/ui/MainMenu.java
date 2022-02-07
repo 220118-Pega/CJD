@@ -104,7 +104,8 @@ private void Approvetransaction(userInfo currentUser) {
 	if(confirm(updatetran)) {
 		updatetran.Approve();
 		ReportBL.updateState(updatetran);
-		System.out.println("Approved");}
+		System.out.println("Approved");
+		}
 	}
 //denys a transaction
 private void Denytransaction(userInfo currentUser) {
@@ -132,6 +133,7 @@ private void getAlltransaction(userInfo currentUser) {
 		else {
 			MainRecordsEmployeeMenu();
 		}
+		myScanner.reset();
 		choice = myScanner.nextLine();
 		switch(choice) {
 			//prints all of employee's transactions or prints all of everyone's transactions if manager
@@ -172,7 +174,8 @@ private void getAlltransaction(userInfo currentUser) {
 					EmployeeIdRequest();
 					int userid = userIntAnswer();
 					GetEmpRecords(userid);}
-				PickRealOption();
+				else {
+				PickRealOption();}
 				break;
 			case "x":
 				keepGoing = false;
@@ -195,6 +198,7 @@ private void createtransaction(userInfo currentUser) {
 	QuitText();;
 	//same structure as userint but its double so cant use like that
 	while(keepGoing) {
+		myScanner.reset();
 		if (myScanner.hasNextDouble()){
 				transactionamount = myScanner.nextDouble();
 				keepGoing = false;
@@ -214,17 +218,21 @@ private void createtransaction(userInfo currentUser) {
 	}
 	else {
 	keepGoing = true;
-	myScanner.nextLine();
+	myScanner.reset();
+	
 	//they can do anything to date need to make them enter a date format
 	System.out.println("Please enter date of transaction: ");
 	QuitText();
+	myScanner.reset();
 	String date = myScanner.nextLine();
 	if(date.equals("x")) {
 		GoodBye();
 	}else {
+		
 	//they can say anything for descrption no need to control it
 	System.out.println("Please enter a descrption of the transaction: ");
 	QuitText();
+	myScanner.reset();
 	String descrption = myScanner.nextLine();
 	if(descrption.equals("x")) {
 		GoodBye();
@@ -237,6 +245,7 @@ private void createtransaction(userInfo currentUser) {
 	// adding the right type
 	while(keepGoing) {
 	MainTypeMenu();
+	myScanner.reset();
 	String transactiontype = myScanner.nextLine();
 	//picking the type
 	switch(transactiontype) {
@@ -309,6 +318,7 @@ private int userIntAnswer() {
 	boolean keepGoing = true;
 	//us a while loop to get a int answer from user
 	while(keepGoing) {
+			myScanner.reset();
 			if (myScanner.hasNextInt()){
 					id = myScanner.nextInt();
 					keepGoing = false;
@@ -381,7 +391,6 @@ private void GetEmpRecords(int userid) {
 		if(user.getUserid() == userid) {
 			System.out.println(user);
 			}}
-	myScanner.nextLine();//this is to clear the line so things arent left for future checks
 }
 
 
