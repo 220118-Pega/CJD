@@ -15,22 +15,22 @@ class userInfoTest {
 	@Test
 	void testEmployid() {
 		TestUser.setEmployid(5);;
-		assertEqual(5, TestUser.getEmployid());
+		assertEquals(5, TestUser.getEmployid());
 	}
 	@Test
 	void testName() {
 		TestUser.setName("TestPassed");
-		assertEqual("TestPassed",TestUser.getName());
+		assertEquals("TestPassed",TestUser.getName());
 	}
 	@Test
 	void testisManager() {
 		TestUser.setManager(true);
-		assertEqual(true, TestUser.isManager());
+		assertEquals(true, TestUser.isManager());
 	}
 	@Test 
 	void testManagerid(){
 		TestUser.setManagerid(45);
-		assertEqual(45, TestUser.getManagerid());
+		assertEquals(45, TestUser.getManagerid());
 	}
 
 }

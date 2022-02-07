@@ -1,8 +1,6 @@
 package com.revature.Expense.Testing;
 
-import static  org.junit.Assert;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions;
 
 import org.junit.jupiter.api.Test;
 import com.revature.Expense.models.transaction;
@@ -32,8 +30,10 @@ class TransactionTest {
 	void TestStringStateSet() {
 		TestTran.StringStateSet("Approved");
 		assertEquals("Approved",TestTran.getStatename());
+		
 		TestTran.StringStateSet("Denied");
 		assertEquals("Denied", TestTran.getStatename());
+		
 		TestTran.StringStateSet("Pending");
 		assertEquals("Pending", TestTran.getStatename());
 	}
@@ -41,12 +41,15 @@ class TransactionTest {
 	@Test
 	void testStringTypeSet() {
 		TestTran.StringTypeSet("Food");
-		assertEquals("Food",TestTran.StringStateSet("Food"));
+		assertEquals("Food",TestTran.getTypename());
+		
 		TestTran.StringTypeSet("Lodging");
-		assertEquals("Lodging", TestTran.StringStateSet("Loging"));
+		assertEquals("Lodging", TestTran.getTypename());
+		
 		TestTran.StringTypeSet("Other");
-		assertEquals("Other", TestTran.StringStateSet("Other"));
+		assertEquals("Other", TestTran.getTypename());
+		
 		TestTran.StringTypeSet("Travel");
-		assertEquals("Travel", TestTran.StringTypeSet("Travel"));
+		assertEquals("Travel", TestTran.getTypename());
 	}
 }

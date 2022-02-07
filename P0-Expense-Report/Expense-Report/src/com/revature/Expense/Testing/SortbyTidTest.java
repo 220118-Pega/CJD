@@ -1,6 +1,5 @@
 package com.revature.Expense.Testing;
-import static org.junit.jupiter.api.Assertions.*;
-
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import com.revature.Expense.models.SortbyTid;
@@ -23,7 +22,7 @@ class SortbyTidTest {
 		testBtransaction.setTransactionid(20);
 		SortbyTid testSort = new SortbyTid();
 		A = testSort.compare(testAtransaction, testBtransaction);
-		assertEqual(-10, A);
+		Assert.assertEquals(-10, A);
 	}
 
 }

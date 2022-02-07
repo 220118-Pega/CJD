@@ -1,6 +1,7 @@
 package com.revature.Expense.Testing;
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import com.revature.Expense.models.SortbyUid;
@@ -20,7 +21,7 @@ class SortbyUidTest {
 	void testCompare() {
 		SortbyUid testSort = new SortbyUid();
 		A = testSort.compare(testAUser, testBUser);
-		assertEqual(-10, A);
+		Assert.assertEquals(-10, A);
 	}
 
 }
