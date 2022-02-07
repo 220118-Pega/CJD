@@ -18,11 +18,15 @@ class SortbyTidTest {
 	
 	@Test
 	void testCompare() {
+		try {
 		testAtransaction.setTransactionid(10);
 		testBtransaction.setTransactionid(20);
 		SortbyTid testSort = new SortbyTid();
 		A = testSort.compare(testAtransaction, testBtransaction);
 		Assert.assertEquals(-10, A);
+		}catch (Exception e) {
+			Assert.fail();
+		}
 	}
 
 }

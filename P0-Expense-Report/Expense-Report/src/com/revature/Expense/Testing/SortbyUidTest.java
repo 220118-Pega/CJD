@@ -19,9 +19,13 @@ class SortbyUidTest {
 	
 	@Test
 	void testCompare() {
+		try {
 		SortbyUid testSort = new SortbyUid();
 		A = testSort.compare(testAUser, testBUser);
 		Assert.assertEquals(-10, A);
+		}catch (Exception e) {
+			Assert.fail();
+		}
 	}
 
 }
