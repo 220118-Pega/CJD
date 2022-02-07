@@ -3,19 +3,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-/**
- * to test sortbyUid
- */
+import com.revature.Expense.models.SortbyUid;
+import com.revature.Expense.models.userInfo;
 
 /**
+ * to test sortbyUid
  * @author 16del
  *
  */
 class SortbyUidTest {
-
+	userInfo testAUser = new userInfo(20, "A", false, 3);
+	userInfo testBUser = new userInfo(30, "A", false, 3);
+	int A;
+	
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testCompare() {
+		SortbyUid testSort = new SortbyUid();
+		A = testSort.compare(testAUser, testBUser);
+		assertEqual(-10, A);
 	}
 
 }

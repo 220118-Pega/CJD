@@ -3,19 +3,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-/**
- * to test sortbyTid
- */
+import com.revature.Expense.models.SortbyTid;
+import com.revature.Expense.models.transaction;
 
 /**
+ * to test sortbyTid
  * @author 16del
  *
  */
 class SortbyTidTest {
 
+	transaction testAtransaction = new transaction(1,35.5, "jan", "r1");
+	transaction testBtransaction = new transaction(2,42.2, "feb", "r2");
+	int A;
+	
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void testCompare() {
+		testAtransaction.setTransactionid(10);
+		testBtransaction.setTransactionid(20);
+		SortbyTid testSort = new SortbyTid();
+		A = testSort.compare(testAtransaction, testBtransaction);
+		assertEqual(-10, A);
 	}
 
 }

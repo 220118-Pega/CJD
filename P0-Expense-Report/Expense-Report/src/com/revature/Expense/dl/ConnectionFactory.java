@@ -27,7 +27,6 @@ public class ConnectionFactory {
 			e.printStackTrace();
 		}
 	}
-	
 	//singletons are charterized by the private constuctor
 	private ConnectionFactory() {
 		//loading properties files that contain db config
@@ -39,7 +38,6 @@ public class ConnectionFactory {
 			logger.error("Can't find db.props file", e);
 		}
 	}
-	
 	//as well as the getInstance method
 	public static ConnectionFactory getInstance() {
 		//lazy loading - create instance of connection facotry when you call
