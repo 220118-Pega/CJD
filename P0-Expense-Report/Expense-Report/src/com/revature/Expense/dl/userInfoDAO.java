@@ -15,7 +15,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.revature.Expense.models.SortbyUid;
-import com.revature.Expense.models.transaction;
 import com.revature.Expense.models.userInfo;
 /**
  * @author 16del

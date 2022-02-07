@@ -47,7 +47,7 @@ public void start() {
 			break;
 		//access records a employee can get their own a manager can access anyone's
 		case "2":
-			System.out.println("Welcome to your Records");
+			System.out.println("Welcome to Records");
 			getAlltransaction(currentUser);
 			break;
 		//manager can approve a transaction
