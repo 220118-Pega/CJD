@@ -124,6 +124,7 @@ public class transaction {
 	}
 	
 	//constructors
+	public transaction() {}
 	public transaction(int userid, double transactionamount, String date, String descritpion) {
 		super();
 		this.userid = userid;
@@ -145,8 +146,6 @@ public class transaction {
 		this.state = state;
 		this.transactionid = transactionid;
 	}
-
-	//userid,amount,date,type,id,status
 	
 	//methods
 	//print out transactions in certain setting

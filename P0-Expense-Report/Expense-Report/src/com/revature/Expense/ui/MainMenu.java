@@ -39,6 +39,7 @@ public void start() {
 		else {
 			MainEmployeeMenu();
 		}
+		myScanner.reset();
 		String userInput = myScanner.nextLine();
 		switch(userInput) {
 		//file out a new transaction
@@ -97,7 +98,8 @@ private void CreateUser(userInfo currrentUser) {
 	userInfo newperson = new userInfo(name, currrentUser.getManagerid());
 	ReportBL.addemployee(newperson);
 	System.out.println(name + " has been added as a employee with you as their manager");
-}}
+}
+	myScanner.reset();}
 //approves a transaction
 private void Approvetransaction(userInfo currentUser) {
 	// if given incorect id num then a dummy is returned
@@ -107,6 +109,7 @@ private void Approvetransaction(userInfo currentUser) {
 		ReportBL.updateState(updatetran);
 		System.out.println("Approved");
 		}
+	myScanner.reset();
 	}
 //denys a transaction
 private void Denytransaction(userInfo currentUser) {
@@ -117,6 +120,7 @@ private void Denytransaction(userInfo currentUser) {
 		ReportBL.updateState(updatetran);
 		System.out.println("Denied");
 	}	
+	myScanner.reset();
 }
 //is the menu to retrive records from memory repo has options for employees and managers currently trusts people to tell the truth
 private void getAlltransaction(userInfo currentUser) {
@@ -185,6 +189,7 @@ private void getAlltransaction(userInfo currentUser) {
 				PickRealOption();
 				break;
 		}}while(keepGoing);
+	myScanner.reset();
 		}
 //takes someone through proccess to create a transaction and upload to memory repo
 private void createtransaction(userInfo currentUser) {
@@ -303,8 +308,9 @@ private void createtransaction(userInfo currentUser) {
 	//database so need to get it back from database 
 	//to show user saved properly
 	newReport = ReportBL.getLatestReport();
+	System.out.println("Saved");
 	System.out.println(newReport);
-	System.out.println("");
+	myScanner.reset();
 	
 }}}}}
 

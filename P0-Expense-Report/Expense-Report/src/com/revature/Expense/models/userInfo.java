@@ -36,6 +36,7 @@ public class userInfo {
 	}
 	
 	//constructor
+	public userInfo() {}
 	//standard constructor when making new employee
 	public userInfo(String Name, int Mid) {
 		this.employid = 0;
